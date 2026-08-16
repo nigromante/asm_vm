@@ -86,7 +86,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 .PHONY: clean
 clean:
-	rm -rf $(WRKDIR)
+	rm -rf $(WRKDIR)  analisis
 
 
 .PHONY: run
