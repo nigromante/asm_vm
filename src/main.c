@@ -5,6 +5,7 @@ run_callback ()
 {
   code->dump ();
   regs_dump ();
+  stack_dump ();
   getchar ();
 }
 
@@ -29,6 +30,7 @@ main (int argc, char **argv)
 
   cpu->run ();
 
+  gotoxy (50, 1);
   printf ("\n");
   return 0;
 }

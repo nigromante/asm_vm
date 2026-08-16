@@ -52,7 +52,6 @@ cpu_stmnt_next ()
 int
 cpu_stmnt_exit ()
 {
-  printf ("\n Exit ");
   return -1;
 }
 

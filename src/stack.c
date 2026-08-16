@@ -40,7 +40,7 @@ stack_dump ()
 {
   for (int i = 0; i < 20; i++)
     {
-      gotoxy (4 + i, 60);
-      printf ("%2d   %c  %d", i, stack_idx == i ? '>' : ' ', stack_data[i]);
+      gotoxy (5 + i, 82);
+      printf ("%c %2d  %4d", stack_idx == i ? '>' : ' ', i, stack_data[i]);
     }
 }
