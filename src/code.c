@@ -216,26 +216,36 @@ code_dump_source ()
   source->dump (line->reference);
 }
 
-/*
 void
 code_dump ()
 {
   int current_line = IP_Get ();
   int src_current_line = 0;
-  printf ("\n global label : [%s]", code->get_global ());
+  // printf ("\n global label : [%s]", code->get_global ());
   for (int cnt = 1; cnt <= code->lines_cnt; cnt++)
     {
       _CODE_LINE_ *line = (_CODE_LINE_ *)((char *)code->lines
                                           + (cnt - 1) * sizeof (_CODE_LINE_));
-      printf (
-          "\n%3d [ %3d ] [%-20s] [%s %c %-20s %-20s %-20s %-20s %s] [ %2d ]",
-          cnt, line->reference, line->label,
-          (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
-          (cnt == current_line) ? '>' : ' ', line->cmd, line->par1, line->par2,
-          line->par3, COLOR_RESET, line->jmp_label);
+      gotoxy (4 + cnt, 1);
+      if (strlen (line->label))
+        printf ("%s %3d %s %s",
+                (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
+                line->label, COLOR_RESET);
+      else
+        printf ("%s %3d\t%s %s %s %s %s",
+                (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
+                line->cmd, line->par1, line->par2, line->par3, COLOR_RESET);
+      /*
+      printf ("%3d [ %3d ] [%-20s] [%s %c %-20s %-20s %-20s %-20s %s] [ %2d ]",
+              cnt, line->reference, line->label,
+              (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
+              (cnt == current_line) ? '>' : ' ', line->cmd, line->par1,
+              line->par2, line->par3, COLOR_RESET, line->jmp_label);
+      */
       if (cnt == current_line)
         src_current_line = line->reference;
     }
+  /*
   printf ("\n\n");
   for (int cnt = 1; cnt <= code->labels_cnt; cnt++)
     {
@@ -244,9 +254,9 @@ code_dump ()
                              + (cnt - 1) * sizeof (_CODE_LABEL_));
       printf ("\n%3d [ %3d ] [%-20s] ", cnt, line->reference, line->label);
     }
+    */
   source->dump (src_current_line);
 }
-*/
 
 // ------------------------------------------------------------------ Instance
 void
@@ -256,7 +266,7 @@ code_init ()
   memset (code, 0x00, sizeof (_CODE_));
 
   code->load = code_load;
-  code->dump = code_dump_source;
+  code->dump = code_dump;
   code->get_global = code_global_get;
   code->get_line = code_line_get;
   code->get_row_by_label = code_label_get;

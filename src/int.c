@@ -7,6 +7,6 @@
 void
 prgm_stmnt_int (int n)
 {
-  gotoxy (5 + vout++, 52);
+  gotoxy (5 + vout++, 82);
   printf ("--- ::  Interrupt %d  | CX : %d --- \n", n, CX_Get ());
 }

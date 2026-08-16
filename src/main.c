@@ -4,6 +4,7 @@ void
 run_callback ()
 {
   code->dump ();
+  regs_dump ();
   getchar ();
 }
 

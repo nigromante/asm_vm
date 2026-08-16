@@ -66,15 +66,14 @@ source_load (char *filename)
 void
 source_dump (int current_line)
 {
-  printf ("\n filename :  [ %s ] ", source->filename);
   for (int cnt = 1; cnt <= source->lines_cnt; cnt++)
     {
       char *pline = source_ptr2line (cnt - 1);
-      printf ("\n%3d [%s %c %-40s %s]", cnt,
+      gotoxy (4 + cnt, 30);
+      printf ("%3d [%s %c %-40s %s]", cnt,
               (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
               (cnt == current_line) ? '>' : ' ', pline, COLOR_RESET);
     }
-  printf ("\n\n");
 }
 
 // -------------------
