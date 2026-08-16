@@ -1,5 +1,5 @@
-
-#include <stdio.h>
+#define VIO_C
+#include <start.h>
 
 void
 gotoxy (int row, int column)

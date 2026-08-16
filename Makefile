@@ -1,5 +1,3 @@
-$(info 'Makefile DEBUG' )
-$(info )
 
 #	Colors --------------------------------------------------------------------
 RED    := $(shell tput -Txterm setaf 1)
@@ -9,9 +7,8 @@ BLUE   := $(shell tput -Txterm setaf 4)
 RESET  := $(shell tput -Txterm sgr0)
 
 
-
 #	Executable Name -----------------------------------------------------------
-TARGETNAME:=framework
+TARGETNAME:=asmvm
 DATA1:=./test/prg1.asm
 
 #	Source Folders ------------------------------------------------------------
@@ -94,10 +91,19 @@ run:
 	@$(TARGET) $(DATA1) 
 
 
+.PHONY: run-demo
+run-demo:
+	@$(TARGET) $(DATA1) DEMO
+
+.PHONY: run-debug
+run-debug:
+	@$(TARGET) $(DATA1) DEBUG
+
+
+
 .PHONY: debug
 debug:
-	@$(TARGET) $(DATA1) DEBUG 
-	# gdb $(TARGET) 
+	gdb $(TARGET) $(DATA1)
 
 
 .PHONY: profile
