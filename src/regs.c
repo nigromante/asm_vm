@@ -271,6 +271,11 @@ regs_dump ()
   gotoxy (1, 1);
   printf (" AX : %4d  BX : %4d  CX : %4d  DX : %4d  IP : %4d  ZF : %4d  BP : "
           "%4d  SP : %4d ",
+          reg_bk.AX, reg_bk.BX, reg_bk.CX, reg_bk.DX, reg_bk.IP, reg_bk.ZF,
+          reg_bk.BP, reg_bk.SP);
+  gotoxy (2, 1);
+  printf (" AX : %4d  BX : %4d  CX : %4d  DX : %4d  IP : %4d  ZF : %4d  BP : "
+          "%4d  SP : %4d ",
           AX_Get (), BX_Get (), CX_Get (), DX_Get (), IP_Get (), ZF_Get (),
           BP_Get (), SP_Get ());
 }
