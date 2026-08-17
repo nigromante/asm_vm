@@ -277,6 +277,28 @@ code_dump_type (int type)
     code_dump_fn = code_dump_full;
 }
 
+// ---------------------------------------------------------------------- Save
+void
+code_save (char *filename)
+{
+  struct header
+  {
+    char global[20];
+    int row;
+    char fill[76];
+  } hdr;
+
+  memset (&hdr, 0x00, sizeof (struct header));
+
+  strcpy (hdr.global, code->global_label);
+  hdr.row = code->get_row_by_label (code->get_global ());
+
+  FILE *fp = fopen (filename, "wb");
+  fwrite (&hdr, 1, sizeof (struct header), fp);
+  fwrite (code->lines, 1, code->lines_cnt * sizeof (_CODE_LINE_), fp);
+  fclose (fp);
+}
+
 // ------------------------------------------------------------------ Instance
 void
 code_init ()
@@ -287,7 +309,7 @@ code_init ()
   code->load = code_load;
   code->dump = code_dump;
   code->dump_type = code_dump_type;
-
+  code->save = code_save;
   code->get_global = code_global_get;
   code->get_line = code_line_get;
   code->get_row_by_label = code_label_get;
