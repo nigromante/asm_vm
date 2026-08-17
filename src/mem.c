@@ -1,18 +1,9 @@
 #define MEM_C
 #include <start.h>
 
-void
-mem_declare (char *variable, int type, int size)
-{
-  MEM_OBJ *p = (MEM_OBJ *)((char *)mem_list + mem_idx * sizeof (MEM_OBJ));
-  strcpy (p->name, variable);
-  sprintf (p->value, "%d", 99);
-  p->type = type;
-  mem_idx++;
-}
-
+// --------------------------------------------------------- Puntero a Memoria
 MEM_OBJ *
-GetPtr (char *variable)
+mem_getptr (char *variable)
 {
   for (int i = 0; i < mem_idx; i++)
     {
@@ -25,21 +16,47 @@ GetPtr (char *variable)
   return 0;
 }
 
+// ---------------------------------------------------------- Declare Variable
+void
+mem_declare (char *variable, int type, int size)
+{
+  MEM_OBJ *p = (MEM_OBJ *)((char *)mem_list + mem_idx * sizeof (MEM_OBJ));
+  strcpy (p->name, variable);
+  sprintf (p->value, "%d", 99);
+  p->type = type;
+  mem_idx++;
+}
+
+// -------------------------------------------------- Mover Memoria a registro
 void
 mem_load (char *registro, char *variable)
 {
-  MEM_OBJ *addr = GetPtr (variable);
+  MEM_OBJ *addr = mem_getptr (variable);
   regs_mov (registro, addr->value);
 }
 
+// -------------------------------------------------- Mover Registro a Memoria
 void
-mem_store (char *registro, char *variable)
+mem_store (char *variable, char *registro)
 {
-  MEM_OBJ *addr = GetPtr (variable);
+  MEM_OBJ *addr = mem_getptr (variable);
   int value = Reg_Get (registro);
   sprintf (addr->value, "%d", value);
 }
 
+// --------------------------------------------------------------------- Debug
+void
+mem_dump ()
+{
+  for (int i = 0; i < mem_idx; i++)
+    {
+      MEM_OBJ *p = (MEM_OBJ *)((char *)mem_list + i * sizeof (MEM_OBJ));
+      gotoxy (2, 1 + i * 10);
+      printf ("[%s] [%s] ", p->name, p->value);
+    }
+}
+
+// ------------------------------------------------------------------ Instance
 void
 mem_init ()
 {
@@ -53,13 +70,4 @@ mem_release ()
   mem_list = NULL;
 }
 
-void
-mem_debug ()
-{
-  for (int i = 0; i < mem_idx; i++)
-    {
-      MEM_OBJ *p = (MEM_OBJ *)((char *)mem_list + i * sizeof (MEM_OBJ));
-      gotoxy (2, 1 + i * 10);
-      printf ("[%s] [%s] ", p->name, p->value);
-    }
-}
+// ------------------------------------------------------------------ Mem Ends

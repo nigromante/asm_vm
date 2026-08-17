@@ -1,5 +1,4 @@
 #include <start.h>
-#include <time.h>
 
 void (*pausa) ();
 
@@ -7,16 +6,6 @@ void
 run_pause_getchar ()
 {
   getchar ();
-}
-
-void
-sleep_ms (long milliseconds)
-{
-  struct timespec ts;
-  ts.tv_sec = milliseconds / 1000; // Extract full seconds
-  ts.tv_nsec
-      = (milliseconds % 1000) * 1000000L; // Convert remainder to nanoseconds
-  nanosleep (&ts, NULL);
 }
 
 void

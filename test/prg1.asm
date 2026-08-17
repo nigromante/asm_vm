@@ -4,7 +4,7 @@ _debug_start:
 
     ; define variable  'n'
     integer n
-    sto 3 n
+    store n 3
     call _test_fn_loop_start
     stop
 
@@ -12,7 +12,7 @@ _start:
 
     ; define variable  'n'
     integer n 
-    sto 10 n
+    store n 10
     call _test_fn_loop_start
     stop
 
@@ -37,9 +37,7 @@ _test_fn_loop_end:
 _test_int_80:
     push bp
     mov bp sp
-
     int 80
-    
     mov sp bp
     pop bp
     ret

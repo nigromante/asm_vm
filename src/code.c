@@ -221,7 +221,6 @@ code_dump ()
 {
   int current_line = IP_Get ();
   int src_current_line = 0;
-  // printf ("\n global label : [%s]", code->get_global ());
   for (int cnt = 1; cnt <= code->lines_cnt; cnt++)
     {
       _CODE_LINE_ *line = (_CODE_LINE_ *)((char *)code->lines
@@ -235,26 +234,9 @@ code_dump ()
         printf ("%s %3d\t%s %s %s %s %s",
                 (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
                 line->cmd, line->par1, line->par2, line->par3, COLOR_RESET);
-      /*
-      printf ("%3d [ %3d ] [%-20s] [%s %c %-20s %-20s %-20s %-20s %s] [ %2d ]",
-              cnt, line->reference, line->label,
-              (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
-              (cnt == current_line) ? '>' : ' ', line->cmd, line->par1,
-              line->par2, line->par3, COLOR_RESET, line->jmp_label);
-      */
       if (cnt == current_line)
         src_current_line = line->reference;
     }
-  /*
-  printf ("\n\n");
-  for (int cnt = 1; cnt <= code->labels_cnt; cnt++)
-    {
-      _CODE_LABEL_ *line
-          = (_CODE_LABEL_ *)((char *)code->labels
-                             + (cnt - 1) * sizeof (_CODE_LABEL_));
-      printf ("\n%3d [ %3d ] [%-20s] ", cnt, line->reference, line->label);
-    }
-    */
   source->dump (src_current_line);
 }
 
