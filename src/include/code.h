@@ -38,6 +38,7 @@ typedef struct
   void (*load) ();
   void (*dump) ();
 
+  void (*dump_type) (int tipo);
   char *(*get_global) ();
 
   _CODE_LINE_ *(*get_line) (int row_number);

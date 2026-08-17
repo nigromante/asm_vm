@@ -217,7 +217,7 @@ code_dump_source ()
 }
 
 void
-code_dump ()
+code_dump_full ()
 {
   int current_line = IP_Get ();
   int src_current_line = 0;
@@ -240,6 +240,23 @@ code_dump ()
   source->dump (src_current_line);
 }
 
+void (*code_dump_fn) ();
+
+void
+code_dump ()
+{
+  code_dump_fn ();
+}
+
+void
+code_dump_type (int type)
+{
+  if (type == 0)
+    code_dump_fn = code_dump_source;
+  else
+    code_dump_fn = code_dump_full;
+}
+
 // ------------------------------------------------------------------ Instance
 void
 code_init ()
@@ -249,6 +266,7 @@ code_init ()
 
   code->load = code_load;
   code->dump = code_dump;
+  code->dump_type = code_dump_type;
 
   code->get_global = code_global_get;
   code->get_line = code_line_get;

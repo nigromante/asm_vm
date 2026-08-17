@@ -51,7 +51,7 @@ mem_dump ()
   for (int i = 0; i < mem_idx; i++)
     {
       MEM_OBJ *p = (MEM_OBJ *)((char *)mem_list + i * sizeof (MEM_OBJ));
-      gotoxy (2, 1 + i * 10);
+      gotoxy (3, 1 + i * 10);
       printf ("[%s] [%s] ", p->name, p->value);
     }
 }
