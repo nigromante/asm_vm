@@ -113,7 +113,7 @@ profile:
 
 .PHONY: help
 help:
-	@cat ./readme.txt
+	@glow ./README.md
 
 
 .PHONY: install
