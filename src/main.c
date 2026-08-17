@@ -29,8 +29,6 @@ void
 trace_callback_simple ()
 {
   code->dump ();
-  //  regs_dump ();
-  //  stack_dump ();
   pausa ();
 }
 

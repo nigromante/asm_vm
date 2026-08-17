@@ -9,7 +9,7 @@ RESET  := $(shell tput -Txterm sgr0)
 
 #	Executable Name -----------------------------------------------------------
 TARGETNAME:=asmvm
-DATA1:=./test/prg1.asm
+ASM_TEST_FILE:=./test/prg1.asm
 
 #	Source Folders ------------------------------------------------------------
 SRCDIR:=./src
@@ -54,16 +54,49 @@ LDLIBS:=
 
 
 
-#	Actions -------------------------------------------------------------------
-
+# -------------------------------------------------------------------- Actions
 .PHONY: build
 build: $(TARGET)
 
 
 .PHONY: all
-all: clean build run
+all: clean zero build
+
+.PHONY: zero
+zero:
+	mkdir -p $(OBJDIR) $(DEPDIR) $(BINDIR)
+
+.PHONY: clean
+clean:
+	rm -rf $(WRKDIR)  analisis
+
+.PHONY: install
+install:
+	cp $(TARGET) $(INSTALL)
+
+# ------------------------------------------------------------------- Executes
+.PHONY: run
+run:
+	@$(TARGET) -f $(ASM_TEST_FILE) 
+
+.PHONY: run-demo
+run-demo:
+	@$(TARGET) -f $(ASM_TEST_FILE) -V -b
+
+.PHONY: run-debug
+run-debug:
+	@$(TARGET) -f $(ASM_TEST_FILE) -D -a
+
+.PHONY: debug
+debug:
+	@gdb $(TARGET) $(ASM_TEST_FILE)
+
+.PHONY: profile
+profile:
+	@bash ./scripts/profile.sh $(TARGET) $(ASM_TEST_FILE) 
 
 
+# ------------------------------------------------------------------- Compile
 $(TARGET): $(OBJS) 
 	$(info  )
 	$(info Linking ... )
@@ -80,49 +113,12 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CCFLAGS) $(DEPFLAGS) $(INCLUDE) $< -o $@
 	@echo -n "${RESET}"  
 
-
-.PHONY: clean
-clean:
-	rm -rf $(WRKDIR)  analisis
-
-
-.PHONY: run
-run:
-	@$(TARGET) -f $(DATA1) 
-
-
-.PHONY: run-demo
-run-demo:
-	@$(TARGET) -f $(DATA1) -V -b
-
-.PHONY: run-debug
-run-debug:
-	@$(TARGET) -f $(DATA1) -D -a
-
-
-
-.PHONY: debug
-debug:
-	gdb $(TARGET) $(DATA1)
-
-
-.PHONY: profile
-profile:
-	@bash ./scripts/profile.sh $(TARGET) $(DATA1) 
-
+# ---------------------------------------------------------------------- Helps
 
 .PHONY: help
 help:
 	@glow ./README.md
 
-
-.PHONY: install
-install:
-	cp $(TARGET) $(INSTALL)
-
-.PHONY: zero
-zero:
-	mkdir -p $(OBJDIR) $(DEPDIR) $(BINDIR)
 
 .PHONY: info
 info:
@@ -131,12 +127,13 @@ info:
 	$(info Working Dir  : $(PWD))
 	$(info )
 	$(info Sources      : $(SRCS))
+	$(info )
 	$(info Dependencies : $(DEPS))
+	$(info )
 	$(info Objects      : $(OBJS))
 	$(info )
 	$(info Install Dir  : $(INSTALL))
 	$(info )
+	$(info Test File    : $(ASM_TEST_FILE)) 
 	@echo
-	@echo "$(LD)  $(OBJS)  $(LDFLAGS) $(LDLIBS) -o $(TARGET) "
-	@echo "$(CC) $(CCFLAGS) $(DEPFLAGS) $(INCLUDE) %.c -o %.o "
 	
