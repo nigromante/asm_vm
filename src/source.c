@@ -70,8 +70,8 @@ source_dump (int current_line)
     {
       char *pline = source_ptr2line (cnt - 1);
       gotoxy (4 + cnt, 30);
-      printf ("%3d [%s %c %-40s %s]", cnt,
-              (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
+      printf ("%s %03d %c %-40s %s",
+              (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
               (cnt == current_line) ? '>' : ' ', pline, COLOR_RESET);
     }
 }

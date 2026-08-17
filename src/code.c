@@ -84,21 +84,20 @@ code_line_read ()
 
           if (*(linea_buffer + strlen (linea_buffer) - 1) == ':')
             {
-              strcpy (line->label, linea_buffer);
-              *(line->label + strlen (line->label) - 1) = 0x00;
-
-              line->cmd_code = NT_VOID;
+              strcpy (line->par1, linea_buffer);
+              *(line->par1 + strlen (line->par1) - 1) = 0x00;
+              line->type = 0;
+              line->code_cmd = NT_VOID;
               code->labels_cnt++;
             }
           else
             {
               char cmd[4][20];
               split_command (linea_buffer, cmd);
-              strcpy (line->cmd, cmd[0]);
+              line->code_cmd = nt_get_code (cmd[0]);
               strcpy (line->par1, cmd[1]);
               strcpy (line->par2, cmd[2]);
-              strcpy (line->par3, cmd[3]);
-              line->cmd_code = nt_get_code (line->cmd);
+              line->type = 1;
             }
           cnt++;
         }
@@ -139,14 +138,14 @@ code_label_read ()
     {
       _CODE_LINE_ *line = (_CODE_LINE_ *)((char *)code->lines
                                           + (row - 1) * sizeof (_CODE_LINE_));
-      if (strlen (line->label) > 0)
+      if (line->type == 0)
         {
           _CODE_LABEL_ *label
               = (_CODE_LABEL_ *)((char *)code->labels
                                  + cnt * sizeof (_CODE_LABEL_));
 
           label->reference = row;
-          strcpy (label->label, line->label);
+          strcpy (label->label, line->par1);
           cnt++;
         }
     }
@@ -188,8 +187,7 @@ code_post_load ()
     {
       _CODE_LINE_ *line = (_CODE_LINE_ *)((char *)code->lines
                                           + (row - 1) * sizeof (_CODE_LINE_));
-      if (strcmp ("CALL", line->cmd) == 0 || strcmp ("JMP", line->cmd) == 0
-          || strcmp ("JZ", line->cmd) == 0 || strcmp ("JNZ", line->cmd) == 0)
+      if (line->code_cmd >= 0x0200 && line->code_cmd < 0x0300)
         {
           line->jmp_label = code_label_get (line->par1);
         }
@@ -228,15 +226,34 @@ code_dump_full ()
       _CODE_LINE_ *line = (_CODE_LINE_ *)((char *)code->lines
                                           + (cnt - 1) * sizeof (_CODE_LINE_));
       gotoxy (4 + cnt, 1);
-      if (strlen (line->label))
-        printf ("%s %3d %s %s",
+      if (line->type == 0)
+        printf ("%s %03d %s %s",
                 (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
-                line->label, COLOR_RESET);
+                line->par1, COLOR_RESET);
       else
-        printf ("%s %3d   %04x %s %s %s %s",
-                (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
-                line->cmd_code, line->par1, line->par2, line->par3,
-                COLOR_RESET);
+        {
+          if (line->code_cmd >= 0x0200 && line->code_cmd < 0x0300)
+            {
+              if (line->jmp_label)
+                {
+                  printf ("%s %03d   %04x %03d %s",
+                          (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
+                          cnt, line->code_cmd, line->jmp_label, COLOR_RESET);
+                }
+              else
+                {
+                  printf ("%s %03d   %04x %s",
+                          (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
+                          cnt, line->code_cmd, COLOR_RESET);
+                }
+            }
+          else
+            {
+              printf ("%s %03d   %04x %s %s %s",
+                      (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
+                      line->code_cmd, line->par1, line->par2, COLOR_RESET);
+            }
+        }
       if (cnt == current_line)
         src_current_line = line->reference;
     }

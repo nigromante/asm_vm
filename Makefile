@@ -81,7 +81,7 @@ run:
 
 .PHONY: run-demo
 run-demo:
-	@$(TARGET) -f $(ASM_TEST_FILE) -V -b
+	@$(TARGET) -f $(ASM_TEST_FILE) -V -a
 
 .PHONY: run-debug
 run-debug:

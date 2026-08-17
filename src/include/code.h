@@ -7,12 +7,10 @@
 typedef struct
 {
   int reference; // line relative to source
-  char label[20];
-  char cmd[20];
-  int cmd_code;
-  char par1[20];
+  int type;
+  int code_cmd;
+  char par1[20]; // label when type == 0
   char par2[20];
-  char par3[20];
   int jmp_label;
 
 } _CODE_LINE_;
@@ -21,7 +19,6 @@ typedef struct
 {
   int reference;
   char label[20];
-
 } _CODE_LABEL_;
 
 typedef struct
