@@ -1,5 +1,6 @@
 #include <ctype.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <time.h>
 
 void
@@ -75,4 +76,11 @@ sleep_ms (long milliseconds)
   ts.tv_nsec
       = (milliseconds % 1000) * 1000000L; // Convert remainder to nanoseconds
   nanosleep (&ts, NULL);
+}
+
+int
+file_exists (const char *filename)
+{
+  struct stat buffer;
+  return (stat (filename, &buffer) == 0); // Returns true if file exists
 }

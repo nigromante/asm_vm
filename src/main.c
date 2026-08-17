@@ -132,6 +132,12 @@ main (int argc, char **argv)
       exit (1);
     }
 
+  if (!file_exists (filename))
+    {
+      printf ("archivo [%s] mo existe ", filename);
+      exit (1);
+    }
+
   return execute (filename, mode, dump_level);
 }
 

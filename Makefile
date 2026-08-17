@@ -88,16 +88,16 @@ clean:
 
 .PHONY: run
 run:
-	@$(TARGET) $(DATA1) 
+	@$(TARGET) -f $(DATA1) 
 
 
 .PHONY: run-demo
 run-demo:
-	@$(TARGET) $(DATA1) DEMO
+	@$(TARGET) -f $(DATA1) -V -b
 
 .PHONY: run-debug
 run-debug:
-	@$(TARGET) $(DATA1) DEBUG
+	@$(TARGET) -f $(DATA1) -D -a
 
 
 
