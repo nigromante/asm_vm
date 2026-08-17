@@ -9,6 +9,7 @@ typedef struct
   int reference; // line relative to source
   char label[20];
   char cmd[20];
+  int cmd_code;
   char par1[20];
   char par2[20];
   char par3[20];

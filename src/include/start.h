@@ -13,6 +13,7 @@
 #include <cpu_stmnt.h>
 #include <int.h>
 #include <mem.h>
+#include <nemotechs.h>
 #include <reg.h>
 #include <regs.h>
 #include <source.h>

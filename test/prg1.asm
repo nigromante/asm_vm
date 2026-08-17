@@ -9,7 +9,6 @@ _debug_start:
     stop
 
 _start:
-
     ; define variable  'n'
     integer n 
     store n 10

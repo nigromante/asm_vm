@@ -87,6 +87,7 @@ code_line_read ()
               strcpy (line->label, linea_buffer);
               *(line->label + strlen (line->label) - 1) = 0x00;
 
+              line->cmd_code = NT_VOID;
               code->labels_cnt++;
             }
           else
@@ -97,6 +98,7 @@ code_line_read ()
               strcpy (line->par1, cmd[1]);
               strcpy (line->par2, cmd[2]);
               strcpy (line->par3, cmd[3]);
+              line->cmd_code = nt_get_code (line->cmd);
             }
           cnt++;
         }
@@ -231,9 +233,10 @@ code_dump_full ()
                 (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
                 line->label, COLOR_RESET);
       else
-        printf ("%s %3d\t%s %s %s %s %s",
+        printf ("%s %3d   %04x %s %s %s %s",
                 (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
-                line->cmd, line->par1, line->par2, line->par3, COLOR_RESET);
+                line->cmd_code, line->par1, line->par2, line->par3,
+                COLOR_RESET);
       if (cnt == current_line)
         src_current_line = line->reference;
     }
