@@ -1,15 +1,11 @@
 
 #define STACK_C
-#include <regs.h>
-#include <stack.h>
-#include <stdio.h>
-#include <string.h>
-#include <vio.h>
+#include <start.h>
 
 void
 __push (int value)
 {
-  if (stack_idx >= 100)
+  if (stack_idx >= STACK_MAX)
     return;
 
   stack_data[stack_idx++] = value;
@@ -23,7 +19,7 @@ __pop ()
     return -1;
 
   int value = stack_data[--stack_idx];
-  stack_data[stack_idx] = -1;
+  stack_data[stack_idx] = 0;
   SP_Set (stack_idx);
   return value;
 }
@@ -38,9 +34,14 @@ stack_init ()
 void
 stack_dump ()
 {
-  for (int i = 0; i < 20; i++)
+  for (int i = 0; i < STACK_MAX; i++)
     {
       gotoxy (5 + i, 82);
+      if (i > stack_idx)
+        {
+          printf ("          ");
+          break;
+        }
       printf ("%c %2d  %4d", stack_idx == i ? '>' : ' ', i, stack_data[i]);
     }
 }

@@ -1,12 +1,8 @@
 #define MEM_C
-#include <mem.h>
-#include <regs.h>
-#include <stdio.h>
-#include <string.h>
-#include <vio.h>
+#include <start.h>
 
 void
-prgm_stmnt_declare (char *variable, int type, int size)
+mem_declare (char *variable, int type, int size)
 {
   MEM_OBJ *p = (MEM_OBJ *)((char *)mem_list + mem_idx * sizeof (MEM_OBJ));
   strcpy (p->name, variable);
@@ -30,14 +26,14 @@ GetPtr (char *variable)
 }
 
 void
-prgm_stmnt_load (char *registro, char *variable)
+mem_load (char *registro, char *variable)
 {
   MEM_OBJ *addr = GetPtr (variable);
-  prgm_stmnt_mov (registro, addr->value);
+  regs_mov (registro, addr->value);
 }
 
 void
-prgm_stmnt_store (char *registro, char *variable)
+mem_store (char *registro, char *variable)
 {
   MEM_OBJ *addr = GetPtr (variable);
   int value = Reg_Get (registro);

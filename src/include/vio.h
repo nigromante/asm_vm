@@ -11,5 +11,7 @@ extern int vio_offset;
 #endif
 
 void gotoxy (int row, int column);
+void cursor_hide ();
+void cursor_show ();
 
 #endif

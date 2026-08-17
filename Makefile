@@ -43,7 +43,7 @@ LIBDIR:=$(LIBSDIR)/bin
 
 # Compiler Flags --------------------------------------------------------------
 CC:=gcc
-CCFLAGS:=-c -g -Wall
+CCFLAGS:=-c -g -Wall 
 INCLUDE:=-I $(SRCDIR)/include -I $(INCDIR)
 DEPFLAGS = -MMD -MP -MF $(DEPDIR)/$*.d 
 

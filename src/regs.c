@@ -1,112 +1,9 @@
 #define REGS_C
 
-#include <regs.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include <vio.h>
-
-void to_uppercase (char *str);
+#include <start.h>
 
 void
-AX_Set (int v)
-{
-  reg.AX = v;
-}
-
-int
-AX_Get ()
-{
-  return reg.AX;
-}
-
-void
-BX_Set (int v)
-{
-  reg.BX = v;
-}
-
-int
-BX_Get ()
-{
-  return reg.BX;
-}
-
-void
-CX_Set (int v)
-{
-  reg.CX = v;
-}
-
-int
-CX_Get ()
-{
-  return reg.CX;
-}
-
-void
-DX_Set (int v)
-{
-  reg.DX = v;
-}
-
-int
-DX_Get ()
-{
-  return reg.DX;
-}
-
-void
-IP_Set (int v)
-{
-  reg.IP = v;
-}
-
-int
-IP_Get ()
-{
-  return reg.IP;
-}
-
-void
-ZF_Set (int v)
-{
-  reg.ZF = v;
-}
-
-int
-ZF_Get ()
-{
-  return reg.ZF;
-}
-
-void
-BP_Set (int v)
-{
-  reg.BP = v;
-}
-
-int
-BP_Get ()
-{
-  return reg.BP;
-}
-
-void
-SP_Set (int v)
-{
-  reg.SP = v;
-}
-
-int
-SP_Get ()
-{
-  return reg.SP;
-}
-
-void
-prgm_stmnt_reset ()
+regs_reset ()
 {
   memset ((void *)&reg, 0x00, sizeof (reg));
 }
@@ -151,7 +48,7 @@ Reg_Set (char *registro, int value)
 }
 
 void
-prgm_stmnt_inc (char *par1, char *par2)
+regs_inc (char *par1, char *par2)
 {
   to_uppercase (par1);
   if (strcmp (par1, "AX") == 0)
@@ -165,7 +62,7 @@ prgm_stmnt_inc (char *par1, char *par2)
 }
 
 void
-prgm_stmnt_dec (char *par1, char *par2)
+regs_dec (char *par1, char *par2)
 {
   to_uppercase (par1);
   if (strcmp (par1, "AX") == 0)
@@ -179,7 +76,7 @@ prgm_stmnt_dec (char *par1, char *par2)
 }
 
 void
-prgm_stmnt_mov (char *par1, char *par2)
+regs_mov (char *par1, char *par2)
 {
   to_uppercase (par1);
   if (strcmp (par1, "AX") == 0)
@@ -197,7 +94,7 @@ prgm_stmnt_mov (char *par1, char *par2)
 }
 
 void
-prgm_stmnt_add (char *par1, char *par2)
+regs_add (char *par1, char *par2)
 {
   to_uppercase (par1);
   if (strcmp (par1, "AX") == 0)
@@ -213,7 +110,7 @@ prgm_stmnt_add (char *par1, char *par2)
 }
 
 void
-prgm_stmnt_sub (char *par1, char *par2)
+regs_sub (char *par1, char *par2)
 {
   to_uppercase (par1);
   if (strcmp (par1, "AX") == 0)
@@ -244,7 +141,7 @@ prgm_stmnt_sub (char *par1, char *par2)
 }
 
 void
-prgm_stmnt_cmp (char *par1, char *par2)
+regs_cmp (char *par1, char *par2)
 {
   to_uppercase (par1);
   if (strcmp (par1, "AX") == 0)
@@ -262,7 +159,7 @@ prgm_stmnt_cmp (char *par1, char *par2)
 void
 Reg_Backup ()
 {
-  memcpy (&reg_bk, &reg, sizeof (REG));
+  memcpy (&reg_bk, &reg, sizeof (_REG_));
 }
 
 void

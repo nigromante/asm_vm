@@ -2,11 +2,13 @@
 #ifndef STACK_H
 #define STACK_H
 
+#define STACK_MAX 20
+
 #ifdef STACK_C
-int stack_data[20];
+int stack_data[STACK_MAX];
 int stack_idx = 0;
 #else
-extern int stack_data[100];
+extern int stack_data[STACK_MAX];
 extern int stack_idx;
 #endif
 

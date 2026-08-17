@@ -267,6 +267,7 @@ code_init ()
 
   code->load = code_load;
   code->dump = code_dump;
+
   code->get_global = code_global_get;
   code->get_line = code_line_get;
   code->get_row_by_label = code_label_get;

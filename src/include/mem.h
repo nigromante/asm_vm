@@ -1,8 +1,6 @@
 #ifndef MEM_H
 #define MEM_H
 
-#include <stdlib.h>
-
 typedef struct
 {
   char name[10];
@@ -23,7 +21,7 @@ void mem_init ();
 void mem_release ();
 void mem_debug ();
 
-void prgm_stmnt_declare (char *variable, int type, int size);
-void prgm_stmnt_load (char *registro, char *variable);
-void prgm_stmnt_store (char *registro, char *variable);
+void mem_declare (char *variable, int type, int size);
+void mem_load (char *registro, char *variable);
+void mem_store (char *registro, char *variable);
 #endif

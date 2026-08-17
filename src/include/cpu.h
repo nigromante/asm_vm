@@ -4,7 +4,7 @@
 typedef struct
 {
   void (*callback_fn) ();
-  void (*set_callback) (void (*fn) ());
+  void (*set_trace) (void (*fn) ());
   int (*run) ();
 } _CPU_;
 

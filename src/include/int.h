@@ -1,5 +1,3 @@
-
-
 #ifndef INT_H
 #define INT_H
 
@@ -9,5 +7,5 @@ int vout = 0;
 
 #endif
 
-void prgm_stmnt_int (int n);
+void int_manager (int n);
 #endif

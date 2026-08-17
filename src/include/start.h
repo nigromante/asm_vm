@@ -10,11 +10,14 @@
 #include <code.h>
 #include <common.h>
 #include <cpu.h>
+#include <cpu_stmnt.h>
 #include <int.h>
 #include <mem.h>
+#include <reg.h>
 #include <regs.h>
 #include <source.h>
 #include <stack.h>
+#include <stack_regs.h>
 #include <vio.h>
 
 #ifdef START_C
