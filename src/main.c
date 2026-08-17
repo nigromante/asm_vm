@@ -74,6 +74,13 @@ execute (char *filename, int mode, int dump_level)
   return ret;
 }
 
+// -------------------------------------------------------- Usage Instructions
+void
+usage ()
+{
+  printf ("usage ... ");
+}
+
 // ---------------------------------------------------------------------- Main
 int
 main (int argc, char **argv)
@@ -83,7 +90,7 @@ main (int argc, char **argv)
   int b_flag = 0, a_flag = 0, dump_level = 1;
   int opt;
 
-  while ((opt = getopt (argc, argv, "RDVf:ba")) != -1)
+  while ((opt = getopt (argc, argv, "RDVf:bah")) != -1)
     {
       switch (opt)
         {
@@ -109,6 +116,10 @@ main (int argc, char **argv)
         case 'a':
           dump_level = 2;
           a_flag = 1;
+          break;
+        case 'h':
+          usage ();
+          exit (0);
           break;
         case '?':
           exit (1);
