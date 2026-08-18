@@ -37,7 +37,7 @@ trace_callback_simple ()
 //  int modo :   RUN -  VIEW DEMO  -  DEBUG
 //  int dump_level : BASIC - FULL
 int
-execute (char *filename, int mode, int dump_level, char *fileoutput)
+execute (char *filename, int mode, int dump_level)
 {
   if (mode == 2 || mode == 3)
     {
@@ -64,11 +64,6 @@ execute (char *filename, int mode, int dump_level, char *fileoutput)
   source->load (filename);
   code->load ();
 
-  if (fileoutput)
-    {
-      code->save (fileoutput);
-      return 0;
-    }
   cursor_hide ();
   int ret = cpu->run ();
   cursor_show ();
@@ -89,20 +84,16 @@ int
 main (int argc, char **argv)
 {
   char *filename = NULL;
-  char *fileputput = NULL;
   int R_flag = 0, D_flag = 0, V_flag = 0, mode = 1;
   int b_flag = 0, a_flag = 0, dump_level = 1;
   int opt;
 
-  while ((opt = getopt (argc, argv, "RDVf:o:bah")) != -1)
+  while ((opt = getopt (argc, argv, "RDVf:bah")) != -1)
     {
       switch (opt)
         {
         case 'f':
           filename = optarg;
-          break;
-        case 'o':
-          fileputput = optarg;
           break;
         case 'R':
           mode = 1;
@@ -156,7 +147,7 @@ main (int argc, char **argv)
       exit (1);
     }
 
-  return execute (filename, mode, dump_level, fileputput);
+  return execute (filename, mode, dump_level);
 }
 
 // ----------------------------------------------------------------- Main Ends
