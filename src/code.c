@@ -1,6 +1,7 @@
 #define CODE_C
 
 #include <start.h>
+#include <sys/stat.h>
 
 // -------------------------------------------------------------------- Global
 void
@@ -299,6 +300,32 @@ code_save (char *filename)
   fclose (fp);
 }
 
+// ---------------------------------------------------------------------- Read
+void
+code_read (char *filename)
+{
+  struct stat st;
+  struct header
+  {
+    char global[20];
+    int row;
+    char fill[76];
+  } hdr;
+  stat (filename, &st);
+
+  code->lines_cnt = (st.st_size - sizeof (hdr)) / sizeof (_CODE_LINE_);
+
+  code->lines = (_CODE_LINE_ *)malloc (code->lines_cnt * sizeof (_CODE_LINE_));
+  memset (code->lines, 0x00, code->lines_cnt * sizeof (_CODE_LINE_));
+
+  FILE *fp = fopen (filename, "rb");
+  fread (&hdr, 1, sizeof (struct header), fp);
+  strcpy (code->global_label, hdr.global);
+  IP_Set (hdr.row);
+  fread (code->lines, 1, code->lines_cnt * sizeof (_CODE_LINE_), fp);
+  fclose (fp);
+}
+
 // ------------------------------------------------------------------ Instance
 void
 code_init ()
@@ -310,6 +337,7 @@ code_init ()
   code->dump = code_dump;
   code->dump_type = code_dump_type;
   code->save = code_save;
+  code->read = code_read;
   code->get_global = code_global_get;
   code->get_line = code_line_get;
   code->get_row_by_label = code_label_get;

@@ -6,6 +6,7 @@ typedef struct
   void (*callback_fn) ();
   void (*set_trace) (void (*fn) ());
   int (*run) ();
+  void (*set_start) ();
 } _CPU_;
 
 #ifdef CPU_C

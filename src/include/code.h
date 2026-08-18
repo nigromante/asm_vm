@@ -36,6 +36,7 @@ typedef struct
   void (*load) ();
   void (*dump) ();
 
+  void (*read) (char *filename);
   void (*save) (char *filename);
 
   void (*dump_type) (int tipo);

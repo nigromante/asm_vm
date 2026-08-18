@@ -16,14 +16,17 @@ cpu_set_trace_callback (void (*fn) ())
   cpu->callback_fn = fn;
 }
 
+void
+cpu_set_start ()
+{
+  char *global = code->get_global ();
+  IP_Set (code->get_row_by_label (global));
+}
+
 // ------------------------------------------------------- CPU Run - Main loop
 int
 cpu_run ()
 {
-  char *global = code->get_global ();
-
-  IP_Set (code->get_row_by_label (global));
-
   while (1)
     {
       int line = IP_Get ();
@@ -56,6 +59,7 @@ cpu_init ()
 
   cpu->run = cpu_run;
   cpu->set_trace = cpu_set_trace_callback;
+  cpu->set_start = cpu_set_start;
 }
 
 void

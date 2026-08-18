@@ -21,7 +21,7 @@ DEPDIR:=$(WRKDIR)/dep
 BINDIR:=$(WRKDIR)/bin
 
 #	Install Folders -----------------------------------------------------------
-INSTALL:=../../run/debug/bin
+INSTALL:=../../test
 
 #	Work Files ----------------------------------------------------------------
 SRCS:=$(shell find $(SRCDIR) -name "*.c")

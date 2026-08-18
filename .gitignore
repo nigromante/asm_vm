@@ -2,3 +2,4 @@
 **/analisis
 **/*.asm.o
 **/main.o
+**/test/asm*

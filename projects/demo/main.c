@@ -65,6 +65,7 @@ execute (char *filename, int mode, int dump_level)
   code->load ();
 
   cursor_hide ();
+  cpu->set_start ();
   int ret = cpu->run ();
   cursor_show ();
 
