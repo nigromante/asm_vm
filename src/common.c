@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <time.h>
@@ -6,11 +7,15 @@
 void
 to_uppercase (char *str)
 {
+  // char *p = str;
+  // printf ("\n [%s]  -  ", str);
   while (*str)
     {
+      // printf ("%02x ", *str);
       *str = (char)toupper ((unsigned char)*str);
       str++;
     }
+  // printf ("  -  [%s]", p);
 }
 
 char *

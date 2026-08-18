@@ -9,6 +9,7 @@
 #define NT_JNZ 0x0202
 #define NT_CALL 0x0203
 #define NT_RET 0x0204
+#define NT_JMP_END 0x02ff
 
 #define NT_MOV 0x0300
 #define NT_ADD 0x0301

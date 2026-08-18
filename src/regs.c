@@ -11,7 +11,6 @@ regs_reset ()
 int
 Reg_Get (char *registro)
 {
-  to_uppercase (registro);
   if (strcmp (registro, "AX") == 0)
     return AX_Get ();
   else if (strcmp (registro, "BX") == 0)
@@ -32,7 +31,6 @@ Reg_Get (char *registro)
 void
 Reg_Set (char *registro, int value)
 {
-  to_uppercase (registro);
   if (strcmp (registro, "AX") == 0)
     AX_Set (value);
   if (strcmp (registro, "BX") == 0)
@@ -50,7 +48,6 @@ Reg_Set (char *registro, int value)
 void
 regs_inc (char *registro)
 {
-  to_uppercase (registro);
   if (strcmp (registro, "AX") == 0)
     AX_Set (AX_Get () + 1);
   if (strcmp (registro, "BX") == 0)
@@ -64,7 +61,6 @@ regs_inc (char *registro)
 void
 regs_dec (char *registro)
 {
-  to_uppercase (registro);
   if (strcmp (registro, "AX") == 0)
     AX_Set (AX_Get () - 1);
   if (strcmp (registro, "BX") == 0)
@@ -78,7 +74,6 @@ regs_dec (char *registro)
 void
 regs_mov (char *reg_dest, char *reg_src)
 {
-  to_uppercase (reg_dest);
   if (strcmp (reg_dest, "AX") == 0)
     AX_Set (Reg_Get (reg_src));
   if (strcmp (reg_dest, "BX") == 0)
@@ -96,7 +91,6 @@ regs_mov (char *reg_dest, char *reg_src)
 void
 regs_add (char *reg_dest, char *reg_src)
 {
-  to_uppercase (reg_dest);
   if (strcmp (reg_dest, "AX") == 0)
     AX_Set (AX_Get () + Reg_Get (reg_src));
   if (strcmp (reg_dest, "BX") == 0)
@@ -112,7 +106,6 @@ regs_add (char *reg_dest, char *reg_src)
 void
 regs_sub (char *reg_dest, char *reg_src)
 {
-  to_uppercase (reg_dest);
   if (strcmp (reg_dest, "AX") == 0)
     {
       AX_Set (AX_Get () - Reg_Get (reg_src));
@@ -143,7 +136,6 @@ regs_sub (char *reg_dest, char *reg_src)
 void
 regs_cmp (char *reg_dest, char *reg_src)
 {
-  to_uppercase (reg_dest);
   if (strcmp (reg_dest, "AX") == 0)
     ZF_Set ((AX_Get () - Reg_Get (reg_src)) == 0);
   if (strcmp (reg_dest, "BX") == 0)
@@ -170,6 +162,7 @@ regs_dump ()
           "%4d  SP : %4d ",
           reg_bk.AX, reg_bk.BX, reg_bk.CX, reg_bk.DX, reg_bk.IP, reg_bk.ZF,
           reg_bk.BP, reg_bk.SP);
+
   gotoxy (2, 1);
   printf (" AX : %4d  BX : %4d  CX : %4d  DX : %4d  IP : %4d  ZF : %4d  BP : "
           "%4d  SP : %4d ",

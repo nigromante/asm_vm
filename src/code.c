@@ -61,6 +61,14 @@ code_line_count ()
 }
 
 void
+code_line_param (char *dest, char *src)
+{
+  if (*src != '_')
+    to_uppercase (src);
+  strcpy (dest, src);
+}
+
+void
 code_line_read ()
 {
   int cnt = 0;
@@ -75,6 +83,7 @@ code_line_read ()
 
           char linea_buffer[100];
           strcpy (linea_buffer, linea);
+
           char *p = strstr (linea_buffer, ";");
           if (p)
             *p = 0x00;
@@ -96,8 +105,8 @@ code_line_read ()
               char cmd[4][20];
               split_command (linea_buffer, cmd);
               line->code_cmd = nt_get_code (cmd[0]);
-              strcpy (line->par1, cmd[1]);
-              strcpy (line->par2, cmd[2]);
+              code_line_param (line->par1, cmd[1]);
+              code_line_param (line->par2, cmd[2]);
               line->type = 1;
             }
           cnt++;
@@ -233,19 +242,19 @@ code_dump_full ()
                 line->par1, COLOR_RESET);
       else
         {
-          if (line->code_cmd >= 0x0200 && line->code_cmd < 0x0300)
+          if (line->code_cmd >= NT_JMP && line->code_cmd < NT_JMP_END)
             {
-              if (line->jmp_label)
-                {
-                  printf ("%s %03d   %04x %03d %s",
-                          (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
-                          cnt, line->code_cmd, line->jmp_label, COLOR_RESET);
-                }
-              else
+              if (line->code_cmd == NT_RET)
                 {
                   printf ("%s %03d   %04x %s",
                           (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
                           cnt, line->code_cmd, COLOR_RESET);
+                }
+              else if (line->jmp_label > 0)
+                {
+                  printf ("%s %03d   %04x %03d %s",
+                          (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
+                          cnt, line->code_cmd, line->jmp_label, COLOR_RESET);
                 }
             }
           else
