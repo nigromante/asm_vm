@@ -79,21 +79,13 @@ install:
 run:
 	@$(TARGET) -f $(ASM_TEST_FILE)  -D -a 
 
-.PHONY: run-demo
-run-demo:
-	@$(TARGET) -f $(ASM_TEST_FILE) -V -a
-
-.PHONY: run-debug
-run-debug:
-	@$(TARGET) -f $(ASM_TEST_FILE) -D -a
-
 .PHONY: debug
 debug:
 	@gdb $(TARGET) $(ASM_TEST_FILE)
 
 .PHONY: profile
 profile:
-	@bash ./scripts/profile.sh $(TARGET) $(ASM_TEST_FILE) 
+	@bash ../../scripts/profile.sh $(TARGET) $(ASM_TEST_FILE) 
 
 
 # ------------------------------------------------------------------- Compile
