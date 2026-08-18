@@ -2,14 +2,12 @@
 
 #include <start.h>
 
-char *
-source_ptr2line (int line)
-{
-  return (char *)source->lines + (line) * sizeof (_SOURCE_LINE_);
-}
+#define SOURCE_GET_LINE(n)                                                    \
+  (char *)source->lines + ((n) - 1) * sizeof (_SOURCE_LINE_)
 
+// ---------------------------------------------------------------------- Load
 int
-count_lines (FILE *file)
+source_load_countlines (FILE *file)
 {
   int cnt = 0;
   char line[100];
@@ -22,44 +20,51 @@ count_lines (FILE *file)
 }
 
 void
-read_lines (FILE *file)
+source_load_readlines (FILE *file)
 {
-  int cnt = 0;
+  int cnt = 1;
   char line[100];
 
   while (fgets (line, sizeof (line), file))
     {
-      char *pline = source_ptr2line (cnt);
+      char *pline = SOURCE_GET_LINE (cnt++);
       strcpy (pline, line);
       *(pline + strlen (pline) - 1) = 0x00;
-      cnt++;
     }
 }
 
 void
-source_alloc ()
+source_load_alloc ()
 {
-  source->lines
-      = (_SOURCE_LINE_ *)malloc (source->lines_cnt * sizeof (_SOURCE_LINE_));
-  memset (source->lines, 0x00, source->lines_cnt * sizeof (_SOURCE_LINE_));
+  int n_size = source->lines_cnt * sizeof (_SOURCE_LINE_);
+  source->lines = (_SOURCE_LINE_ *)malloc (n_size);
+  memset (source->lines, 0x00, n_size);
 }
 
-// ----------------------------------------------------------------------- Load
 int
 source_load (char *filename)
 {
-  strcpy (source->filename, filename);
-
   FILE *file = fopen (filename, "r");
-
-  source->lines_cnt = count_lines (file);
-
-  source_alloc ();
-
-  read_lines (file);
-
+  {
+    source->lines_cnt = source_load_countlines (file);
+    source_load_alloc ();
+    source_load_readlines (file);
+  }
   fclose (file);
   return 0;
+}
+
+// --------------------------------------------------------------- Data Access
+int
+source_count_lines ()
+{
+  return source->lines_cnt;
+}
+
+char *
+source_get_line (int line)
+{
+  return SOURCE_GET_LINE (line);
 }
 
 // ----------------------------------------------------------------------- Dump
@@ -68,27 +73,15 @@ source_dump (int current_line)
 {
   for (int cnt = 1; cnt <= source->lines_cnt; cnt++)
     {
-      char *pline = source_ptr2line (cnt - 1);
+      char *pline = source_get_line (cnt);
       gotoxy (4 + cnt, 30);
-      printf ("%s %03d %c %-40s %s",
-              (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
-              (cnt == current_line) ? '>' : ' ', pline, COLOR_RESET);
+      printf ("%s %03d %-40s %s",
+              (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt, pline,
+              COLOR_RESET);
     }
 }
 
-// -------------------
-int
-source_count_lines ()
-{
-  return source->lines_cnt;
-}
-
-char *
-source_get_line (int row)
-{
-  return source_ptr2line (row - 1);
-}
-
+// ------------------------------------------------------------------ Instance
 void
 source_init ()
 {
@@ -105,6 +98,10 @@ void
 source_release ()
 {
   free (source->lines);
+  source->lines = NULL;
+
   free (source);
   source = NULL;
 }
+
+// --------------------------------------------------------------- Source Ends
