@@ -22,7 +22,7 @@ mem_declare (char *variable, int type, int size)
 {
   MEM_OBJ *p = (MEM_OBJ *)((char *)mem_list + mem_idx * sizeof (MEM_OBJ));
   strcpy (p->name, variable);
-  sprintf (p->value, "%d", 99);
+  sprintf (p->value, "%d", 0);
   p->type = type;
   mem_idx++;
 }

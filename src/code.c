@@ -63,7 +63,7 @@ code_line_count ()
 void
 code_line_param (char *dest, char *src)
 {
-  if (*src != '_')
+  if (*src != '_') // exclude labels
     to_uppercase (src);
   strcpy (dest, src);
 }

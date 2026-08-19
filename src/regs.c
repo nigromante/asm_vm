@@ -2,6 +2,15 @@
 
 #include <start.h>
 
+#define AND(a, b) ((a) && (b))
+#define OR(a, b) ((a) || (b))
+#define NOT(a) (!(a))
+
+#define BXOR(a, b) ((a) ^ (b))
+#define BAND(a, b) ((a) & (b))
+#define BOR(a, b) ((a) | (b))
+#define BNOT(a) (~(a))
+
 void
 regs_reset ()
 {
@@ -104,6 +113,45 @@ regs_add (char *reg_dest, char *reg_src)
 }
 
 void
+regs_mul (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    AX_Set (AX_Get () * Reg_Get (reg_src));
+  if (strcmp (reg_dest, "BX") == 0)
+    BX_Set (BX_Get () * Reg_Get (reg_src));
+  if (strcmp (reg_dest, "CX") == 0)
+    CX_Set (CX_Get () * Reg_Get (reg_src));
+  if (strcmp (reg_dest, "DX") == 0)
+    DX_Set (DX_Get () * Reg_Get (reg_src));
+}
+
+void
+regs_div (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    AX_Set (AX_Get () / Reg_Get (reg_src));
+  if (strcmp (reg_dest, "BX") == 0)
+    BX_Set (BX_Get () / Reg_Get (reg_src));
+  if (strcmp (reg_dest, "CX") == 0)
+    CX_Set (CX_Get () / Reg_Get (reg_src));
+  if (strcmp (reg_dest, "DX") == 0)
+    DX_Set (DX_Get () / Reg_Get (reg_src));
+}
+
+void
+regs_mod (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    AX_Set (AX_Get () % Reg_Get (reg_src));
+  if (strcmp (reg_dest, "BX") == 0)
+    BX_Set (BX_Get () % Reg_Get (reg_src));
+  if (strcmp (reg_dest, "CX") == 0)
+    CX_Set (CX_Get () % Reg_Get (reg_src));
+  if (strcmp (reg_dest, "DX") == 0)
+    DX_Set (DX_Get () % Reg_Get (reg_src));
+}
+
+void
 regs_sub (char *reg_dest, char *reg_src)
 {
   if (strcmp (reg_dest, "AX") == 0)
@@ -133,6 +181,7 @@ regs_sub (char *reg_dest, char *reg_src)
     }
 }
 
+#define COMP(a, b) (((a) - (b)) == 0 ? 0 : ((a) > (b) ? 1 : -1))
 void
 regs_cmp (char *reg_dest, char *reg_src)
 {
@@ -146,6 +195,150 @@ regs_cmp (char *reg_dest, char *reg_src)
     ZF_Set ((DX_Get () - Reg_Get (reg_src)) == 0);
   if (strcmp (reg_dest, "SP") == 0)
     ZF_Set ((SP_Get () - Reg_Get (reg_src)) == 0);
+}
+
+void
+regs_cmp_gt (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    ZF_Set ((AX_Get () - Reg_Get (reg_src)) > 0);
+  if (strcmp (reg_dest, "BX") == 0)
+    ZF_Set ((BX_Get () - Reg_Get (reg_src)) > 0);
+  if (strcmp (reg_dest, "CX") == 0)
+    ZF_Set ((CX_Get () - Reg_Get (reg_src)) > 0);
+  if (strcmp (reg_dest, "DX") == 0)
+    ZF_Set ((DX_Get () - Reg_Get (reg_src)) > 0);
+}
+
+void
+regs_cmp_lt (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    ZF_Set ((AX_Get () - Reg_Get (reg_src)) < 0);
+  if (strcmp (reg_dest, "BX") == 0)
+    ZF_Set ((BX_Get () - Reg_Get (reg_src)) < 0);
+  if (strcmp (reg_dest, "CX") == 0)
+    ZF_Set ((CX_Get () - Reg_Get (reg_src)) < 0);
+  if (strcmp (reg_dest, "DX") == 0)
+    ZF_Set ((DX_Get () - Reg_Get (reg_src)) < 0);
+}
+
+void
+regs_cmp_gte (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    ZF_Set ((AX_Get () - Reg_Get (reg_src)) >= 0);
+  if (strcmp (reg_dest, "BX") == 0)
+    ZF_Set ((BX_Get () - Reg_Get (reg_src)) >= 0);
+  if (strcmp (reg_dest, "CX") == 0)
+    ZF_Set ((CX_Get () - Reg_Get (reg_src)) >= 0);
+  if (strcmp (reg_dest, "DX") == 0)
+    ZF_Set ((DX_Get () - Reg_Get (reg_src)) >= 0);
+}
+
+void
+regs_cmp_lte (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    ZF_Set ((AX_Get () - Reg_Get (reg_src)) <= 0);
+  if (strcmp (reg_dest, "BX") == 0)
+    ZF_Set ((BX_Get () - Reg_Get (reg_src)) <= 0);
+  if (strcmp (reg_dest, "CX") == 0)
+    ZF_Set ((CX_Get () - Reg_Get (reg_src)) <= 0);
+  if (strcmp (reg_dest, "DX") == 0)
+    ZF_Set ((DX_Get () - Reg_Get (reg_src)) <= 0);
+}
+
+void
+regs_cmp_and (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    AX_Set (AND (AX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "BX") == 0)
+    BX_Set (AND (BX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "CX") == 0)
+    CX_Set (AND (CX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "DX") == 0)
+    CX_Set (AND (CX_Get (), Reg_Get (reg_src)));
+}
+
+void
+regs_cmp_or (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    AX_Set (OR (AX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "BX") == 0)
+    BX_Set (OR (BX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "CX") == 0)
+    CX_Set (OR (CX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "DX") == 0)
+    CX_Set (OR (CX_Get (), Reg_Get (reg_src)));
+}
+
+void
+regs_cmp_not (char *reg_dest)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    AX_Set (NOT (AX_Get ()));
+  if (strcmp (reg_dest, "BX") == 0)
+    BX_Set (NOT (BX_Get ()));
+  if (strcmp (reg_dest, "CX") == 0)
+    CX_Set (NOT (CX_Get ()));
+  if (strcmp (reg_dest, "DX") == 0)
+    CX_Set (NOT (CX_Get ()));
+}
+
+//                                                                 Bitwise
+void
+regs_bxor (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    AX_Set (BXOR (AX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "BX") == 0)
+    BX_Set (BXOR (BX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "CX") == 0)
+    CX_Set (BXOR (CX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "DX") == 0)
+    DX_Set (BXOR (DX_Get (), Reg_Get (reg_src)));
+}
+
+void
+regs_band (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    AX_Set (BAND (AX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "BX") == 0)
+    BX_Set (BAND (BX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "CX") == 0)
+    CX_Set (BAND (CX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "DX") == 0)
+    DX_Set (BAND (DX_Get (), Reg_Get (reg_src)));
+}
+
+void
+regs_b_or (char *reg_dest, char *reg_src)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    AX_Set (BOR (AX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "BX") == 0)
+    BX_Set (BOR (BX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "CX") == 0)
+    CX_Set (BOR (CX_Get (), Reg_Get (reg_src)));
+  if (strcmp (reg_dest, "DX") == 0)
+    DX_Set (BOR (DX_Get (), Reg_Get (reg_src)));
+}
+
+void
+regs_bnot (char *reg_dest)
+{
+  if (strcmp (reg_dest, "AX") == 0)
+    AX_Set (BNOT (AX_Get ()));
+  if (strcmp (reg_dest, "BX") == 0)
+    BX_Set (BNOT (BX_Get ()));
+  if (strcmp (reg_dest, "CX") == 0)
+    CX_Set (BNOT (CX_Get ()));
+  if (strcmp (reg_dest, "DX") == 0)
+    DX_Set (BNOT (DX_Get ()));
 }
 
 void

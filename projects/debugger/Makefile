@@ -1,3 +1,5 @@
+t ?= list 
+
 
 #	Colors --------------------------------------------------------------------
 RED    := $(shell tput -Txterm setaf 1)
@@ -77,7 +79,7 @@ install:
 # ------------------------------------------------------------------- Executes
 .PHONY: run
 run:
-	@$(TARGET) -f $(ASM_TEST_FILE)  -D -a 
+	@bash ./run.sh $(TARGET) $(t) 
 
 .PHONY: debug
 debug:
