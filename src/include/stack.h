@@ -6,10 +6,8 @@
 
 #ifdef STACK_C
 int stack_data[STACK_MAX];
-int stack_idx = 0;
 #else
 extern int stack_data[STACK_MAX];
-extern int stack_idx;
 #endif
 
 void __push (int value);

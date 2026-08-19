@@ -4,8 +4,6 @@
 
 int Reg_Get (char *registro);
 void Reg_Set (char *registro, int value);
-void regs_inc (char *registro);
-void regs_dec (char *registro);
 
 void regs_mov (char *reg_dest, char *reg_src);
 
@@ -15,14 +13,14 @@ void regs_mul (char *reg_dest, char *reg_src);
 void regs_div (char *reg_dest, char *reg_src);
 void regs_mod (char *reg_dest, char *reg_src);
 
+void regs_inc (char *registro);
+void regs_dec (char *registro);
+
 void regs_cmp (char *reg_dest, char *reg_src);
-void regs_cmp_gt (char *reg_dest, char *reg_src);
-void regs_cmp_lt (char *reg_dest, char *reg_src);
-void regs_cmp_gte (char *reg_dest, char *reg_src);
-void regs_cmp_lte (char *reg_dest, char *reg_src);
-void regs_cmp_and (char *reg_dest, char *reg_src);
-void regs_cmp_or (char *reg_dest, char *reg_src);
-void regs_cmp_not (char *reg_dest);
+
+void regs_and (char *reg_dest, char *reg_src);
+void regs_or (char *reg_dest, char *reg_src);
+void regs_not (char *reg_dest);
 
 void regs_bxor (char *reg_dest, char *reg_src);
 void regs_band (char *reg_dest, char *reg_src);

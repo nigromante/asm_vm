@@ -62,26 +62,50 @@ cpu_stmnt_eval (_CODE_LINE_ *stmnt)
 {
 
   // -------------------------------------------------------------------- Stop
-  if (stmnt->code_cmd == NT_STOP)
+  if (stmnt->code_cmd == NT_END)
     return cpu_stmnt_exit ();
 
   // ---------------------------------------------------------------- Comments
-  else if (stmnt->code_cmd == NT_VOID)
+  else if (stmnt->code_cmd == NT_NOP)
     cpu_stmnt_void ();
 
   // ------------------------------------------------------------------- Jumps
   else if (stmnt->code_cmd == NT_JMP)
     return cpu_stmnt_jmp (stmnt->jmp_label);
 
-  else if (stmnt->code_cmd == NT_JZ)
+  else if (stmnt->code_cmd == NT__JZ)
     {
-      if (reg.ZF == 1)
+      if (reg.ZF == 0)
         return cpu_stmnt_jmp (stmnt->jmp_label);
     }
 
   else if (stmnt->code_cmd == NT_JNZ)
     {
-      if (reg.ZF == 0)
+      if (reg.ZF != 0)
+        return cpu_stmnt_jmp (stmnt->jmp_label);
+    }
+
+  else if (stmnt->code_cmd == NT_JGT)
+    {
+      if (reg.ZF == 1)
+        return cpu_stmnt_jmp (stmnt->jmp_label);
+    }
+
+  else if (stmnt->code_cmd == NT_JGE)
+    {
+      if (reg.ZF == 0 || reg.ZF == 1)
+        return cpu_stmnt_jmp (stmnt->jmp_label);
+    }
+
+  else if (stmnt->code_cmd == NT_JLT)
+    {
+      if (reg.ZF == -1)
+        return cpu_stmnt_jmp (stmnt->jmp_label);
+    }
+
+  else if (stmnt->code_cmd == NT_JLE)
+    {
+      if (reg.ZF == 0 || reg.ZF == -1)
         return cpu_stmnt_jmp (stmnt->jmp_label);
     }
 
@@ -118,30 +142,19 @@ cpu_stmnt_eval (_CODE_LINE_ *stmnt)
   else if (stmnt->code_cmd == NT_DEC)
     regs_dec (stmnt->par1);
 
-  //                                                              logics
-  else if (stmnt->code_cmd == NT_EQU)
+  //                                                              Compare
+  else if (stmnt->code_cmd == NT_CMP)
     regs_cmp (stmnt->par1, stmnt->par2);
 
-  else if (stmnt->code_cmd == NT__GT)
-    regs_cmp_gt (stmnt->par1, stmnt->par2);
-
-  else if (stmnt->code_cmd == NT_GTE)
-    regs_cmp_gte (stmnt->par1, stmnt->par2);
-
-  else if (stmnt->code_cmd == NT__LT)
-    regs_cmp_lt (stmnt->par1, stmnt->par2);
-
-  else if (stmnt->code_cmd == NT_LTE)
-    regs_cmp_lte (stmnt->par1, stmnt->par2);
-
+  //                                                              logics
   else if (stmnt->code_cmd == NT_LAND)
-    regs_cmp_and (stmnt->par1, stmnt->par2);
+    regs_and (stmnt->par1, stmnt->par2);
 
   else if (stmnt->code_cmd == NT_L_OR)
-    regs_cmp_or (stmnt->par1, stmnt->par2);
+    regs_or (stmnt->par1, stmnt->par2);
 
   else if (stmnt->code_cmd == NT_LNOT)
-    regs_cmp_not (stmnt->par1);
+    regs_not (stmnt->par1);
 
   //                                                                Bits
   else if (stmnt->code_cmd == NT_BXOR)
@@ -175,8 +188,8 @@ cpu_stmnt_eval (_CODE_LINE_ *stmnt)
     mem_declare (stmnt->par1, 1, 0);
 
   // -------------------------------------------------------------- Interrupts
-  else if (stmnt->code_cmd == NT_INT)
-    int_manager (atoi (stmnt->par1));
+  else if (stmnt->code_cmd == NT_SYSCALL)
+    syscall_manager (atoi (stmnt->par1));
 
   // ------------------------------------------------- Undefined Command Error
   else

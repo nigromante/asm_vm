@@ -2,6 +2,8 @@
 
 #include <start.h>
 
+#define COMP(a, b) (((a) - (b)) == 0 ? 0 : ((a) > (b) ? 1 : -1))
+
 #define AND(a, b) ((a) && (b))
 #define OR(a, b) ((a) || (b))
 #define NOT(a) (!(a))
@@ -77,6 +79,8 @@ regs_inc (char *registro)
     CX_Set (CX_Get () + 1);
   if (strcmp (registro, "DX") == 0)
     DX_Set (DX_Get () + 1);
+  if (strcmp (registro, "SP") == 0)
+    SP_Set (SP_Get () + 1);
 }
 
 void
@@ -90,6 +94,8 @@ regs_dec (char *registro)
     CX_Set (CX_Get () - 1);
   if (strcmp (registro, "DX") == 0)
     DX_Set (DX_Get () - 1);
+  if (strcmp (registro, "SP") == 0)
+    SP_Set (SP_Get () - 1);
 }
 
 void
@@ -175,100 +181,45 @@ regs_sub (char *reg_dest, char *reg_src)
   if (strcmp (reg_dest, "AX") == 0)
     {
       AX_Set (AX_Get () - Reg_Get (reg_src));
-      ZF_Set (AX_Get () == 0);
+      ZF_Set (COMP (AX_Get (), Reg_Get (reg_src)));
     }
   if (strcmp (reg_dest, "BX") == 0)
     {
       BX_Set (BX_Get () - Reg_Get (reg_src));
-      ZF_Set (BX_Get () == 0);
+      ZF_Set (COMP (BX_Get (), Reg_Get (reg_src)));
     }
   if (strcmp (reg_dest, "CX") == 0)
     {
       CX_Set (CX_Get () - Reg_Get (reg_src));
-      ZF_Set (CX_Get () == 0);
+      ZF_Set (COMP (CX_Get (), Reg_Get (reg_src)));
     }
   if (strcmp (reg_dest, "DX") == 0)
     {
       DX_Set (DX_Get () - Reg_Get (reg_src));
-      ZF_Set (DX_Get () == 0);
+      ZF_Set (COMP (DX_Get (), Reg_Get (reg_src)));
     }
   if (strcmp (reg_dest, "SP") == 0)
     {
       SP_Set (SP_Get () - Reg_Get (reg_src));
-      ZF_Set (SP_Get () == 0);
     }
 }
 
-#define COMP(a, b) (((a) - (b)) == 0 ? 0 : ((a) > (b) ? 1 : -1))
 void
 regs_cmp (char *reg_dest, char *reg_src)
 {
   if (strcmp (reg_dest, "AX") == 0)
-    ZF_Set ((AX_Get () - Reg_Get (reg_src)) == 0);
+    ZF_Set (COMP (AX_Get (), Reg_Get (reg_src)));
   if (strcmp (reg_dest, "BX") == 0)
-    ZF_Set ((BX_Get () - Reg_Get (reg_src)) == 0);
+    ZF_Set (COMP (BX_Get (), Reg_Get (reg_src)));
   if (strcmp (reg_dest, "CX") == 0)
-    ZF_Set ((CX_Get () - Reg_Get (reg_src)) == 0);
+    ZF_Set (COMP (CX_Get (), Reg_Get (reg_src)));
   if (strcmp (reg_dest, "DX") == 0)
-    ZF_Set ((DX_Get () - Reg_Get (reg_src)) == 0);
-  if (strcmp (reg_dest, "SP") == 0)
-    ZF_Set ((SP_Get () - Reg_Get (reg_src)) == 0);
+    ZF_Set (COMP (DX_Get (), Reg_Get (reg_src)));
 }
 
+// -------------------------------------------------------------- Logical Inst
 void
-regs_cmp_gt (char *reg_dest, char *reg_src)
-{
-  if (strcmp (reg_dest, "AX") == 0)
-    ZF_Set ((AX_Get () - Reg_Get (reg_src)) > 0);
-  if (strcmp (reg_dest, "BX") == 0)
-    ZF_Set ((BX_Get () - Reg_Get (reg_src)) > 0);
-  if (strcmp (reg_dest, "CX") == 0)
-    ZF_Set ((CX_Get () - Reg_Get (reg_src)) > 0);
-  if (strcmp (reg_dest, "DX") == 0)
-    ZF_Set ((DX_Get () - Reg_Get (reg_src)) > 0);
-}
-
-void
-regs_cmp_lt (char *reg_dest, char *reg_src)
-{
-  if (strcmp (reg_dest, "AX") == 0)
-    ZF_Set ((AX_Get () - Reg_Get (reg_src)) < 0);
-  if (strcmp (reg_dest, "BX") == 0)
-    ZF_Set ((BX_Get () - Reg_Get (reg_src)) < 0);
-  if (strcmp (reg_dest, "CX") == 0)
-    ZF_Set ((CX_Get () - Reg_Get (reg_src)) < 0);
-  if (strcmp (reg_dest, "DX") == 0)
-    ZF_Set ((DX_Get () - Reg_Get (reg_src)) < 0);
-}
-
-void
-regs_cmp_gte (char *reg_dest, char *reg_src)
-{
-  if (strcmp (reg_dest, "AX") == 0)
-    ZF_Set ((AX_Get () - Reg_Get (reg_src)) >= 0);
-  if (strcmp (reg_dest, "BX") == 0)
-    ZF_Set ((BX_Get () - Reg_Get (reg_src)) >= 0);
-  if (strcmp (reg_dest, "CX") == 0)
-    ZF_Set ((CX_Get () - Reg_Get (reg_src)) >= 0);
-  if (strcmp (reg_dest, "DX") == 0)
-    ZF_Set ((DX_Get () - Reg_Get (reg_src)) >= 0);
-}
-
-void
-regs_cmp_lte (char *reg_dest, char *reg_src)
-{
-  if (strcmp (reg_dest, "AX") == 0)
-    ZF_Set ((AX_Get () - Reg_Get (reg_src)) <= 0);
-  if (strcmp (reg_dest, "BX") == 0)
-    ZF_Set ((BX_Get () - Reg_Get (reg_src)) <= 0);
-  if (strcmp (reg_dest, "CX") == 0)
-    ZF_Set ((CX_Get () - Reg_Get (reg_src)) <= 0);
-  if (strcmp (reg_dest, "DX") == 0)
-    ZF_Set ((DX_Get () - Reg_Get (reg_src)) <= 0);
-}
-
-void
-regs_cmp_and (char *reg_dest, char *reg_src)
+regs_and (char *reg_dest, char *reg_src)
 {
   if (strcmp (reg_dest, "AX") == 0)
     AX_Set (AND (AX_Get (), Reg_Get (reg_src)));
@@ -281,7 +232,7 @@ regs_cmp_and (char *reg_dest, char *reg_src)
 }
 
 void
-regs_cmp_or (char *reg_dest, char *reg_src)
+regs_or (char *reg_dest, char *reg_src)
 {
   if (strcmp (reg_dest, "AX") == 0)
     AX_Set (OR (AX_Get (), Reg_Get (reg_src)));
@@ -294,7 +245,7 @@ regs_cmp_or (char *reg_dest, char *reg_src)
 }
 
 void
-regs_cmp_not (char *reg_dest)
+regs_not (char *reg_dest)
 {
   if (strcmp (reg_dest, "AX") == 0)
     AX_Set (NOT (AX_Get ()));
@@ -370,13 +321,13 @@ regs_dump ()
 {
   gotoxy (1, 1);
   printf (" AX : %4d  BX : %4d  CX : %4d  DX : %4d  IP : %4d  ZF : %4d  BP : "
-          "%4d  SP : %4d ",
+          "%4d  SP : %4d  DI : %4d  SI : %4d  RX : %4d",
           reg_bk.AX, reg_bk.BX, reg_bk.CX, reg_bk.DX, reg_bk.IP, reg_bk.ZF,
-          reg_bk.BP, reg_bk.SP);
+          reg_bk.BP, reg_bk.SP, reg_bk.DI, reg_bk.SI, reg_bk.RX);
 
   gotoxy (2, 1);
   printf (" AX : %4d  BX : %4d  CX : %4d  DX : %4d  IP : %4d  ZF : %4d  BP : "
-          "%4d  SP : %4d ",
+          "%4d  SP : %4d  DI : %4d  SI : %4d  RX : %4d",
           AX_Get (), BX_Get (), CX_Get (), DX_Get (), IP_Get (), ZF_Get (),
-          BP_Get (), SP_Get ());
+          BP_Get (), SP_Get (), DI_Get (), SI_Get (), RX_Get ());
 }

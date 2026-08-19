@@ -7,6 +7,6 @@ int vout = 0;
 
 #endif
 
-void int_manager (int n);
+void syscall_manager (int n);
 
 #endif

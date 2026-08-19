@@ -97,7 +97,7 @@ code_line_read ()
               strcpy (line->par1, linea_buffer);
               *(line->par1 + strlen (line->par1) - 1) = 0x00;
               line->type = 0;
-              line->code_cmd = NT_VOID;
+              line->code_cmd = NT_NOP;
               code->labels_cnt++;
             }
           else

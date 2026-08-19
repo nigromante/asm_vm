@@ -5,43 +5,46 @@
 void
 __push (int value)
 {
-  if (stack_idx >= STACK_MAX)
+  int idx = SP_Get ();
+  if (idx >= STACK_MAX)
     return;
 
-  stack_data[stack_idx++] = value;
-  SP_Set (stack_idx);
+  stack_data[idx++] = value;
+  SP_Set (idx);
 }
 
 int
 __pop ()
 {
-  if (stack_idx < 0)
+  int idx = SP_Get ();
+  if (idx < 0)
     return -1;
 
-  int value = stack_data[--stack_idx];
-  stack_data[stack_idx] = 0;
-  SP_Set (stack_idx);
+  int value = stack_data[--idx];
+  stack_data[idx] = 0;
+  SP_Set (idx);
   return value;
 }
 
 void
 stack_init ()
 {
-  stack_idx = 0;
+  SP_Set (0);
   memset ((char *)&stack_data, 0x00, sizeof (stack_data));
 }
 
 void
 stack_dump ()
 {
+  int idx = SP_Get ();
   for (int i = 0; i < STACK_MAX; i++)
     {
       gotoxy (5 + i, 82);
-      if (i > stack_idx)
+      if (i > idx)
         {
           printf ("          ");
           break;
         }
-      printf ("%c %2d  %4d", stack_idx == i ? '>' : ' ', i, stack_data[i]);
+      printf ("%c %2d  %4d", idx == i ? '>' : ' ', i, stack_data[i]);
     }
 }

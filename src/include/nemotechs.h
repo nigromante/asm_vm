@@ -1,14 +1,19 @@
 #ifndef NEMOTECHS_H
 #define NEMOTECHS_H
 
-#define NT_STOP 0x0100
-#define NT_VOID 0x0101
+#define NT_END 0x0100
+#define NT_NOP 0x0101
 
 #define NT_JMP 0x0200
-#define NT_JZ 0x0201
+#define NT__JZ 0x0201
 #define NT_JNZ 0x0202
-#define NT_CALL 0x0203
-#define NT_RET 0x0204
+#define NT_JGT 0x0203
+#define NT_JLT 0x0204
+#define NT_JGE 0x0205
+#define NT_JLE 0x0206
+
+#define NT_CALL 0x0211
+#define NT_RET 0x0212
 #define NT_JMP_END 0x02ff
 
 #define NT_MOV 0x0300
@@ -22,11 +27,7 @@
 #define NT_INC 0x0306
 #define NT_DEC 0x0307
 
-#define NT_EQU 0x0311
-#define NT__GT 0x0312
-#define NT__LT 0x0313
-#define NT_GTE 0x0314
-#define NT_LTE 0x0315
+#define NT_CMP 0x0311
 #define NT_LAND 0x0316
 #define NT_L_OR 0x0317
 #define NT_LNOT 0x0318
@@ -45,7 +46,7 @@
 #define NT_LOAD 0x0501
 #define NT_STORE 0x0502
 
-#define NT_INT 0x0600
+#define NT_SYSCALL 0x0600
 
 #ifdef NEMOTECHS_C
 
@@ -57,33 +58,58 @@ typedef struct
 
 _NM_DATA_ nm_data[] = {
 
-  { "", NT_VOID },      { ";", NT_VOID },      { "NOP", NT_VOID },
+  { "", NT_NOP },
+  { ";", NT_NOP },
+  { "NOP", NT_NOP },
 
-  { "STOP", NT_STOP },  { "EXIT", NT_STOP },   { "END", NT_STOP },
+  { "STOP", NT_END },
+  { "EXIT", NT_END },
+  { "END", NT_END },
 
-  { "JMP", NT_JMP },    { "JZ", NT_JZ },       { "JNZ", NT_JNZ },
-  { "JE", NT_JZ },      { "JNE", NT_JNZ },
+  { "JMP", NT_JMP },
+  { "JZ", NT__JZ },
+  { "JE", NT__JZ },
+  { "JNZ", NT_JNZ },
+  { "JNE", NT_JNZ },
 
-  { "CALL", NT_CALL },  { "RET", NT_RET },
+  { "JGT", NT_JGT },
+  { "JGE", NT_JGE },
+  { "JLT", NT_JLT },
+  { "JLE", NT_JLE },
+
+  { "CALL", NT_CALL },
+  { "RET", NT_RET },
 
   { "MOV", NT_MOV },
 
-  { "ADD", NT_ADD },    { "SUB", NT_SUB },     { "MUL", NT_MUL },
-  { "DIV", NT_DIV },    { "MOD", NT_MOD },     { "INC", NT_INC },
+  { "ADD", NT_ADD },
+  { "SUB", NT_SUB },
+  { "MUL", NT_MUL },
+  { "DIV", NT_DIV },
+  { "MOD", NT_MOD },
+  { "INC", NT_INC },
   { "DEC", NT_DEC },
 
-  { "CMP", NT_EQU },    { "EQU", NT_EQU },
+  { "CMP", NT_CMP },
 
-  { "XOR", NT_BXOR },   { "AND", NT_BAND },    { "OR", NT_B_OR },
-  { "NOT", NT_BNOT },   { "SHL", NT_BSHL },    { "SHR", NT_BSHR },
+  { "XOR", NT_BXOR },
+  { "AND", NT_BAND },
+  { "OR", NT_B_OR },
+  { "NOT", NT_BNOT },
+  { "SHL", NT_BSHL },
+  { "SHR", NT_BSHR },
 
-  { "PUSH", NT_PSH },   { "POP", NT_POP },
+  { "PUSH", NT_PSH },
+  { "POP", NT_POP },
 
-  { "NUMBER", NT_NUM }, { "NUM", NT_NUM },
+  { "NUMBER", NT_NUM },
+  { "NUM", NT_NUM },
 
-  { "LOAD", NT_LOAD },  { "STORE", NT_STORE },
+  { "LOAD", NT_LOAD },
+  { "STORE", NT_STORE },
 
-  { "INT", NT_INT },
+  { "SYSCALL", NT_SYSCALL },
+  { "INT", NT_SYSCALL },
 };
 
 #endif
