@@ -11,10 +11,9 @@
 #define NT_JLT 0x0204
 #define NT_JGE 0x0205
 #define NT_JLE 0x0206
-
 #define NT_CALL 0x0211
 #define NT_RET 0x0212
-#define NT_JMP_END 0x02ff
+#define NT_JXX 0x02ff
 
 #define NT_MOV 0x0300
 
@@ -28,9 +27,9 @@
 #define NT_DEC 0x0307
 
 #define NT_CMP 0x0311
-#define NT_LAND 0x0316
-#define NT_L_OR 0x0317
-#define NT_LNOT 0x0318
+#define NT_LAND 0x0312
+#define NT_L_OR 0x0313
+#define NT_LNOT 0x0314
 
 #define NT_BXOR 0x0321
 #define NT_BAND 0x0322
@@ -42,12 +41,12 @@
 #define NT_PSH 0x0400
 #define NT_POP 0x0401
 
-#define NT_NUM 0x0500
 #define NT_LOAD 0x0501
 #define NT_STORE 0x0502
 
 #define NT_SYSCALL 0x0600
 
+#define NT_NUM 0x0700
 #ifdef NEMOTECHS_C
 
 typedef struct

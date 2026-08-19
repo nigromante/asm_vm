@@ -242,7 +242,7 @@ code_dump_full ()
                 line->par1, COLOR_RESET);
       else
         {
-          if (line->code_cmd >= NT_JMP && line->code_cmd < NT_JMP_END)
+          if (line->code_cmd >= NT_JMP && line->code_cmd < NT_JXX)
             {
               if (line->code_cmd == NT_RET)
                 {
