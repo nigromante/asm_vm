@@ -57,9 +57,9 @@ typedef struct
 
 _NM_DATA_ nm_data[] = {
 
-  { "", NT_VOID },      { ";", NT_VOID },
+  { "", NT_VOID },      { ";", NT_VOID },      { "NOP", NT_VOID },
 
-  { "STOP", NT_STOP },  { "EXIT", NT_STOP },
+  { "STOP", NT_STOP },  { "EXIT", NT_STOP },   { "END", NT_STOP },
 
   { "JMP", NT_JMP },    { "JZ", NT_JZ },       { "JNZ", NT_JNZ },
   { "JE", NT_JZ },      { "JNE", NT_JNZ },

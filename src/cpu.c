@@ -37,17 +37,23 @@ cpu_run ()
       if (stmnt == NULL)
         break;
 
-      Reg_Backup ();
-
       if (cpu_stmnt_eval (stmnt) != 0)
         {
           break;
         }
 
+      ciclos++;
+      Reg_Backup ();
       exec_callback ();
     }
 
   return 0;
+}
+
+int
+cpu_ciclos_total ()
+{
+  return ciclos;
 }
 
 // ------------------------------------------------------------------ Instance
@@ -60,6 +66,7 @@ cpu_init ()
   cpu->run = cpu_run;
   cpu->set_trace = cpu_set_trace_callback;
   cpu->set_start = cpu_set_start;
+  cpu->ciclos_total = cpu_ciclos_total;
 }
 
 void

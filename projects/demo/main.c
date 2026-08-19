@@ -22,6 +22,9 @@ trace_callback_full ()
   regs_dump ();
   stack_dump ();
   mem_dump ();
+  int c = cpu->ciclos_total ();
+  gotoxy (3, 1);
+  printf ("Ciclos : [ %04d]", c);
   pausa ();
 }
 

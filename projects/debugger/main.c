@@ -70,6 +70,7 @@ execute (char *filename, int mode, int dump_level)
   cursor_show ();
 
   gotoxy (50, 1);
+  printf ("\n total de ciclos : %d \n", cpu->ciclos_total ());
   return ret;
 }
 
