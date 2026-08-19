@@ -17,8 +17,12 @@ _start:
     stop
 
 _test_fn_loop_start:
+    ; --- Prologue ---
     push bp
     mov bp sp
+    add sp 1
+
+    ; --- Ini loop vars
     xor cx cx ; set 0 to cx
     load bx n
 
@@ -30,6 +34,7 @@ _test_fn_loop:
     jmp _test_fn_loop
 
 _test_fn_loop_end:
+    ; --- Epilogue ---
     mov sp bp
     pop bp
     ret

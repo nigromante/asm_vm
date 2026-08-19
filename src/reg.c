@@ -97,3 +97,39 @@ SP_Get ()
 {
   return reg.SP;
 }
+
+void
+DI_Set (int v)
+{
+  reg.DI = v;
+}
+
+int
+DI_Get ()
+{
+  return reg.DI;
+}
+
+void
+SI_Set (int v)
+{
+  reg.SI = v;
+}
+
+int
+SI_Get ()
+{
+  return reg.SI;
+}
+
+void
+RX_Set (int v)
+{
+  reg.RX = v;
+}
+
+int
+RX_Get ()
+{
+  return reg.RX;
+}

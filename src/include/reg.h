@@ -3,14 +3,18 @@
 
 typedef struct
 {
-  int AX;
+  int AX; // Acumulador
   int BX;
-  int CX;
+  int CX; //  Contador
   int DX;
-  int IP;
-  int ZF;
-  int BP;
-  int SP;
+
+  int RX; //  Return
+  int DI; //  Parametro
+  int SI; //  Parametro
+  int IP; //  Instrucion Point
+  int ZF; //  Zero flag
+  int BP; //  Base Pointer
+  int SP; //  Stack Pointer
 
 } _REG_;
 
@@ -41,4 +45,10 @@ int BP_Get ();
 void SP_Set (int v);
 int SP_Get ();
 
+void DI_Set (int v);
+int DI_Get ();
+void SI_Set (int v);
+int SI_Get ();
+void RX_Set (int v);
+int RX_Get ();
 #endif

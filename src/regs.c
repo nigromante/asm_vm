@@ -34,6 +34,12 @@ Reg_Get (char *registro)
     return SP_Get ();
   else if (strcmp (registro, "IP") == 0)
     return IP_Get ();
+  else if (strcmp (registro, "DI") == 0)
+    return DI_Get ();
+  else if (strcmp (registro, "SI") == 0)
+    return SI_Get ();
+  else if (strcmp (registro, "RX") == 0)
+    return RX_Get ();
   return atoi (registro);
 }
 
@@ -52,6 +58,12 @@ Reg_Set (char *registro, int value)
     BP_Set (value);
   if (strcmp (registro, "SP") == 0)
     SP_Set (value);
+  if (strcmp (registro, "DI") == 0)
+    DI_Set (value);
+  if (strcmp (registro, "SI") == 0)
+    SI_Set (value);
+  if (strcmp (registro, "RX") == 0)
+    RX_Set (value);
 }
 
 void
@@ -95,6 +107,12 @@ regs_mov (char *reg_dest, char *reg_src)
     BP_Set (Reg_Get (reg_src));
   if (strcmp (reg_dest, "SP") == 0)
     SP_Set (Reg_Get (reg_src));
+  if (strcmp (reg_dest, "DI") == 0)
+    DI_Set (Reg_Get (reg_src));
+  if (strcmp (reg_dest, "SI") == 0)
+    SI_Set (Reg_Get (reg_src));
+  if (strcmp (reg_dest, "RX") == 0)
+    RX_Set (Reg_Get (reg_src));
 }
 
 void
