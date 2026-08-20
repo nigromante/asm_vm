@@ -13,8 +13,6 @@ typedef struct
   int SI; //  Parametro
   int IP; //  Instrucion Point
   int ZF; //  Zero flag
-  int BP; //  Base Pointer
-  int SP; //  Stack Pointer
 
 } _REG_;
 
@@ -40,10 +38,6 @@ void IP_Set (int v);
 int IP_Get ();
 void ZF_Set (int v);
 int ZF_Get ();
-void BP_Set (int v);
-int BP_Get ();
-void SP_Set (int v);
-int SP_Get ();
 
 void DI_Set (int v);
 int DI_Get ();

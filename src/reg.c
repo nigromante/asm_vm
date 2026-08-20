@@ -75,30 +75,6 @@ ZF_Get ()
 }
 
 void
-BP_Set (int v)
-{
-  reg.BP = v;
-}
-
-int
-BP_Get ()
-{
-  return reg.BP;
-}
-
-void
-SP_Set (int v)
-{
-  reg.SP = v;
-}
-
-int
-SP_Get ()
-{
-  return reg.SP;
-}
-
-void
 DI_Set (int v)
 {
   reg.DI = v;

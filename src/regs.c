@@ -30,10 +30,6 @@ Reg_Get (char *registro)
     return CX_Get ();
   else if (strcmp (registro, "DX") == 0)
     return DX_Get ();
-  else if (strcmp (registro, "BP") == 0)
-    return BP_Get ();
-  else if (strcmp (registro, "SP") == 0)
-    return SP_Get ();
   else if (strcmp (registro, "IP") == 0)
     return IP_Get ();
   else if (strcmp (registro, "DI") == 0)
