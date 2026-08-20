@@ -7,10 +7,10 @@ __attribute__ ((constructor)) void
 loader_init ()
 {
   mem_init ();
-  stack_init ();
   source_init ();
   code_init ();
   cpu_init ();
+  ram_init ();
 }
 
 __attribute__ ((destructor)) void
@@ -20,4 +20,5 @@ loader_end ()
   source_release ();
   code_release ();
   cpu_release ();
+  ram_release ();
 }

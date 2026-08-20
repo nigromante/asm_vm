@@ -10,6 +10,7 @@ _debug_start:
 
 _start:
     ; define variable  'n'
+    push bp
     MOV cx 99
     num n 
     store n 10
@@ -20,7 +21,7 @@ _test_fn_loop_start:
     ; --- Prologue ---
     push bp
     mov bp sp
-    add sp 1
+    sub sp 8
 
     ; --- Ini loop vars
     xor cx cx ; set 0 to cx
@@ -42,6 +43,10 @@ _test_fn_loop_end:
 _test_int_80:
     push bp
     mov bp sp
+    push 1111
+    sub sp 4
+    push 2222 
+
     int 80
     mov sp bp
     pop bp

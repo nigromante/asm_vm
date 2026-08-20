@@ -14,6 +14,7 @@
 #include <int.h>
 #include <mem.h>
 #include <nemotechs.h>
+#include <ram.h>
 #include <reg.h>
 #include <regs.h>
 #include <source.h>

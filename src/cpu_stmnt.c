@@ -5,7 +5,7 @@
 int
 cpu_stmnt_call (int jmp_label)
 {
-  __push (IP_Get () + 1);
+  _push (IP_Get () + 1);
   IP_Set (jmp_label);
   return 0;
 }
@@ -13,7 +13,7 @@ cpu_stmnt_call (int jmp_label)
 int
 cpu_stmnt_ret ()
 {
-  IP_Set (__pop ());
+  IP_Set (_pop ());
   return 0;
 }
 

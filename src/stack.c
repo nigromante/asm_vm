@@ -3,48 +3,35 @@
 #include <start.h>
 
 void
-__push (int value)
+_push (int value)
 {
-  int idx = SP_Get ();
-  if (idx >= STACK_MAX)
-    return;
-
-  stack_data[idx++] = value;
-  SP_Set (idx);
+  PTR p = ram->stack_alloc (4);
+  memcpy (p, (char *)&value, 4);
 }
 
 int
-__pop ()
+_pop ()
 {
-  int idx = SP_Get ();
-  if (idx < 0)
-    return -1;
+  int value = 0;
+  PTR p = ram->stack_read (0);
+  memcpy (&value, (char *)p, 4);
+  ram->stack_free (4);
+  memset (p, 0x00, 4);
+  return value;
+}
 
-  int value = stack_data[--idx];
-  stack_data[idx] = 0;
-  SP_Set (idx);
+int
+_read (int offset)
+{
+  int value = 0;
+  PTR p = ram->stack_read (offset);
+  memcpy (&value, (char *)p, 4);
   return value;
 }
 
 void
-stack_init ()
+_alloc (int size)
 {
-  SP_Set (0);
-  memset ((char *)&stack_data, 0x00, sizeof (stack_data));
-}
-
-void
-stack_dump ()
-{
-  int idx = SP_Get ();
-  for (int i = 0; i < STACK_MAX; i++)
-    {
-      gotoxy (5 + i, 82);
-      if (i > idx)
-        {
-          printf ("          ");
-          break;
-        }
-      printf ("%c %2d  %4d", idx == i ? '>' : ' ', i, stack_data[i]);
-    }
+  PTR p = ram->stack_alloc (size);
+  memset (p, 0x00, size);
 }

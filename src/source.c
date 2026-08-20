@@ -74,8 +74,8 @@ source_dump (int current_line)
   for (int cnt = 1; cnt <= source->lines_cnt; cnt++)
     {
       char *pline = source_get_line (cnt);
-      gotoxy (4 + cnt, 30);
-      printf ("%s %03d %-40s %s",
+      gotoxy (4 + cnt, 1);
+      printf ("%s %03d %s %s",
               (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt, pline,
               COLOR_RESET);
     }
