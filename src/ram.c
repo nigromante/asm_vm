@@ -14,6 +14,13 @@ ram_mem_avail ()
 
 // --------------------------------------------------------------------- Stack
 
+void
+ram_stack_upd_regs ()
+{
+  reg.BP = _BP;
+  reg.SP = _SP;
+}
+
 PTR
 ram_stack_alloc (int n)
 {
@@ -23,6 +30,7 @@ ram_stack_alloc (int n)
       return NULL;
     }
   _SP = _SP - n;
+  ram_stack_upd_regs ();
 
   return ram->ptr + _SP;
 }
@@ -37,18 +45,21 @@ void
 ram_stack_free (int n)
 {
   _SP = _SP + n;
+  ram_stack_upd_regs ();
 }
 
 void
 ram_stack_bp2sp ()
 {
   _SP = _BP;
+  ram_stack_upd_regs ();
 }
 
 void
 ram_stack_sp2bp ()
 {
   _BP = _SP;
+  ram_stack_upd_regs ();
 }
 
 // ---------------------------------------------------------------------- Heap
@@ -96,6 +107,7 @@ ram_init ()
   ram->stack_read = ram_stack_read;
   ram->stack_bp2sp = ram_stack_bp2sp;
   ram->stack_sp2bp = ram_stack_sp2bp;
+  ram->stack_upd_regs = ram_stack_upd_regs;
 
   ram->ptr = (PTR)malloc (RAM_SIZE);
   memset (ram->ptr, 0x00, RAM_SIZE);
@@ -105,6 +117,8 @@ ram_init ()
 
   ram->stack_ini = RAM_SIZE;
   ram->stack_end = ram->stack_ini;
+
+  ram_stack_upd_regs ();
 }
 
 void

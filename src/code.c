@@ -231,8 +231,6 @@ code_dump_full ()
 {
   int current_line = IP_Get ();
   int src_current_line = 0;
-  gotoxy (4, 30);
-  printf ("Line : [ %3d ] ", current_line);
   for (int cnt = 1; cnt <= code->lines_cnt; cnt++)
     {
       _CODE_LINE_ *line = (_CODE_LINE_ *)((char *)code->lines

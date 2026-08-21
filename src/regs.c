@@ -30,6 +30,10 @@ Reg_Get (char *registro)
     return CX_Get ();
   else if (strcmp (registro, "DX") == 0)
     return DX_Get ();
+  else if (strcmp (registro, "BP") == 0)
+    return BP_Get ();
+  else if (strcmp (registro, "SP") == 0)
+    return SP_Get ();
   else if (strcmp (registro, "IP") == 0)
     return IP_Get ();
   else if (strcmp (registro, "DI") == 0)
@@ -58,6 +62,8 @@ Reg_Set (char *registro, int value)
     SI_Set (value);
   if (strcmp (registro, "RX") == 0)
     RX_Set (value);
+  if (strcmp (registro, "BP") == 0)
+    ram->stack_ini = value;
 }
 
 void
