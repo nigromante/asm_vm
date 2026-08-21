@@ -1,11 +1,8 @@
 #define RAM_C
 
 #include <start.h>
-#define _BP ram->header->stack_ini
-#define _SP ram->header->stack_end
 
 // ----------------------------------------------------------------- Funciones
-
 int
 ram_mem_avail ()
 {
