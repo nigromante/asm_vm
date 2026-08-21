@@ -9,6 +9,10 @@
 
 #define RAM_MAX_VAR 20
 
+// Macros
+#define _BP ram->header->stack_ini
+#define _SP ram->header->stack_end
+
 // --- Types definition
 typedef int INT;
 typedef unsigned int UINT;
@@ -24,13 +28,21 @@ typedef struct
 
 typedef struct
 {
-  PTR ptr;
-
+  INT program_control;
   INT stack_ini;
   INT stack_end;
-
   INT heap_ini;
   INT heap_end;
+
+  char filler[12];
+
+} _RAM_HEADER;
+
+typedef struct
+{
+  PTR ptr;
+
+  _RAM_HEADER *header;
 
   void (*dump) ();
   int (*mem_avail) ();

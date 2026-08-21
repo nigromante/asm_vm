@@ -63,7 +63,7 @@ Reg_Set (char *registro, int value)
   if (strcmp (registro, "RX") == 0)
     RX_Set (value);
   if (strcmp (registro, "BP") == 0)
-    ram->stack_ini = value;
+    ram->header->stack_ini = value;
 }
 
 void

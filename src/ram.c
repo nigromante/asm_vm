@@ -1,15 +1,15 @@
 #define RAM_C
 
 #include <start.h>
-#define _BP ram->stack_ini
-#define _SP ram->stack_end
+#define _BP ram->header->stack_ini
+#define _SP ram->header->stack_end
 
 // ----------------------------------------------------------------- Funciones
 
 int
 ram_mem_avail ()
 {
-  return (_SP - ram->heap_end);
+  return (_SP - ram->header->heap_end);
 }
 
 // --------------------------------------------------------------------- Stack
@@ -112,11 +112,13 @@ ram_init ()
   ram->ptr = (PTR)malloc (RAM_SIZE);
   memset (ram->ptr, 0x00, RAM_SIZE);
 
-  ram->heap_ini = 0;
-  ram->heap_end = ram->heap_ini;
+  ram->header = (_RAM_HEADER *)ram->ptr;
 
-  ram->stack_ini = RAM_SIZE;
-  ram->stack_end = ram->stack_ini;
+  ram->header->heap_ini = 0;
+  ram->header->heap_end = ram->header->heap_ini;
+
+  ram->header->stack_ini = RAM_SIZE;
+  ram->header->stack_end = ram->header->stack_ini;
 
   ram_stack_upd_regs ();
 }
