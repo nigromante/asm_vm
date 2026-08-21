@@ -222,7 +222,7 @@ code_dump_source ()
   _CODE_LINE_ *line
       = (_CODE_LINE_ *)((char *)code->lines
                         + (IP_Get () - 1) * sizeof (_CODE_LINE_));
-  gotoxy (3, 30);
+  gotoxy (3, 40);
   source->dump (line->reference);
 }
 
@@ -235,7 +235,7 @@ code_dump_full ()
     {
       _CODE_LINE_ *line = (_CODE_LINE_ *)((char *)code->lines
                                           + (cnt - 1) * sizeof (_CODE_LINE_));
-      gotoxy (4 + cnt, 30);
+      gotoxy (4 + cnt, 40);
       if (line->type == 0)
         printf ("%s %03d %s %s",
                 (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,

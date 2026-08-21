@@ -1,31 +1,47 @@
     global _start
 
 _debug_start:
+    push bp
+    mov bp sp
 
-    ; define variable  'n'
-    number n
-    store n 3
-    call _test_fn_loop_start
+    push 5 ;  5 times loop
+    call _test_fn_start
+
+    mov sp bp
+    pop bp
     stop
 
 _start:
     ; define variable  'n'
-    push bp
-    MOV cx 99
     num n 
     store n 10
-    call _test_fn_loop_start
+    push 0
+    call _test_fn_call
     stop
 
-_test_fn_loop_start:
+; ==============================
+_test_fn_call:
+    ; parametros por la pila
+    mov bx [bp+4]  
+
+    ; si no esta en la pila
+    ; usar variable n
+    cmp bx 0
+    jnz _test_fn_begin
+    load bx n
+
+_test_fn_begin:
+
     ; --- Prologue ---
     push bp
     mov bp sp
-    sub sp 8
+    
+    ; Reserva 2 var int
+    sub sp 8  
 
     ; --- Ini loop vars
     xor cx cx ; set 0 to cx
-    load bx n
+    ; load bx n
 
 _test_fn_loop:
     cmp bx cx
@@ -35,6 +51,9 @@ _test_fn_loop:
     jmp _test_fn_loop
 
 _test_fn_loop_end:
+    ; Return value
+    mov rx 667
+
     ; --- Epilogue ---
     mov sp bp
     pop bp
