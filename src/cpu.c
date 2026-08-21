@@ -46,7 +46,6 @@ cpu_run ()
       Reg_Backup ();
       exec_callback ();
     }
-  ram->stack_upd_regs ();
   exec_callback ();
   return 0;
 }

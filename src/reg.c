@@ -1,6 +1,6 @@
 #define REG_C
 
-#include <reg.h>
+#include <start.h>
 
 void
 AX_Set (int v)
@@ -75,30 +75,6 @@ ZF_Get ()
 }
 
 void
-BP_Set (int v)
-{
-  reg.BP = v;
-}
-
-int
-BP_Get ()
-{
-  return reg.BP;
-}
-
-void
-SP_Set (int v)
-{
-  reg.SP = v;
-}
-
-int
-SP_Get ()
-{
-  return reg.SP;
-}
-
-void
 DI_Set (int v)
 {
   reg.DI = v;
@@ -132,4 +108,27 @@ int
 RX_Get ()
 {
   return reg.RX;
+}
+
+int
+BP_Get ()
+{
+  return ram->header->stack_ini;
+}
+
+void
+BP_Set (int v)
+{
+  ram->header->stack_ini = v;
+}
+int
+SP_Get ()
+{
+  return ram->header->stack_end;
+}
+
+void
+SP_Set (int v)
+{
+  ram->header->stack_end = v;
 }

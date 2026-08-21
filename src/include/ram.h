@@ -51,7 +51,6 @@ typedef struct
   void (*stack_free) (int n);
   void (*stack_bp2sp) ();
   void (*stack_sp2bp) ();
-  void (*stack_upd_regs) ();
 } _RAM_;
 
 // --- Declare Variables

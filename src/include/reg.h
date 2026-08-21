@@ -13,8 +13,6 @@ typedef struct
   int SI; //  Parametro
   int IP; //  Instrucion Point
   int ZF; //  Zero flag
-  int BP; //  Base Pointer
-  int SP; //  Stack Pointer
 
 } _REG_;
 
