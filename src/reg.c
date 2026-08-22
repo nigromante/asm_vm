@@ -53,13 +53,13 @@ DX_Get ()
 void
 IP_Set (int v)
 {
-  reg.IP = v;
+  ram->header->program_control = v;
 }
 
 int
 IP_Get ()
 {
-  return reg.IP;
+  return ram->header->program_control;
 }
 
 void

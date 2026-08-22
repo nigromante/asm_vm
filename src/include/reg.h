@@ -11,7 +11,6 @@ typedef struct
   int RX; //  Return
   int DI; //  Parametro
   int SI; //  Parametro
-  int IP; //  Instrucion Point
   int ZF; //  Zero flag
 
 } _REG_;
