@@ -185,7 +185,7 @@ cpu_stmnt_eval (_CODE_LINE_ *stmnt)
 
   // ------------------------------------------------------------------- Types
   else if (stmnt->code_cmd == NT_NUM)
-    mem_declare (stmnt->par1, 1, 0);
+    mem_declare (stmnt->par1, 1, sizeof (int));
 
   // -------------------------------------------------------------- Interrupts
   else if (stmnt->code_cmd == NT_SYSCALL)

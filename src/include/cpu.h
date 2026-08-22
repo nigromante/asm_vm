@@ -12,7 +12,6 @@ typedef struct
 
 #ifdef CPU_C
 _CPU_ *cpu = NULL;
-int ciclos = 0;
 #else
 extern _CPU_ *cpu;
 #endif

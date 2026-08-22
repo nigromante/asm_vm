@@ -12,7 +12,7 @@ run_pause_getchar ()
 void
 run_pause_sleep ()
 {
-  sleep_ms (70);
+  sleep_ms (60);
 }
 
 void
@@ -21,10 +21,6 @@ trace_callback_full ()
   code->dump ();
   regs_dump ();
   ram->dump ();
-  mem_dump ();
-  int c = cpu->ciclos_total ();
-  gotoxy (3, 1);
-  printf ("Ciclos : [ %04d]", c);
   pausa ();
 }
 

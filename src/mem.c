@@ -22,7 +22,7 @@ mem_declare (char *variable, int type, int size)
 {
   MEM_OBJ *p = (MEM_OBJ *)((char *)mem_list + mem_idx * sizeof (MEM_OBJ));
   strcpy (p->name, variable);
-  sprintf (p->value, "%d", 0);
+  p->value = ram->heap_alloc (size);
   p->type = type;
   mem_idx++;
 }
@@ -32,7 +32,7 @@ void
 mem_load (char *registro, char *variable)
 {
   MEM_OBJ *addr = mem_getptr (variable);
-  regs_mov (registro, addr->value);
+  regs_mov_int (registro, *(int *)addr->value);
 }
 
 // -------------------------------------------------- Mover Registro a Memoria
@@ -41,7 +41,7 @@ mem_store (char *variable, char *registro)
 {
   MEM_OBJ *addr = mem_getptr (variable);
   int value = Reg_Get (registro);
-  sprintf (addr->value, "%d", value);
+  memcpy (addr->value, &value, sizeof (value));
 }
 
 // --------------------------------------------------------------------- Debug
@@ -52,7 +52,7 @@ mem_dump ()
     {
       MEM_OBJ *p = (MEM_OBJ *)((char *)mem_list + i * sizeof (MEM_OBJ));
       gotoxy (3, 1 + i * 10);
-      printf ("[%s] [%s] ", p->name, p->value);
+      printf ("[%s] [%d] ", p->name, *(int *)p->value);
     }
 }
 

@@ -231,39 +231,57 @@ code_dump_full ()
 {
   int current_line = IP_Get ();
   int src_current_line = 0;
-  for (int cnt = 1; cnt <= code->lines_cnt; cnt++)
+  int _alto = 30, _start = 1, _end = code->lines_cnt;
+  int _medio = _alto / 2;
+  char buffer[100];
+
+  if (_end > _alto)
+    {
+      if (current_line + _medio > _end)
+        {
+          _start = _end - _alto;
+        }
+      else
+        {
+          if (current_line > _medio)
+            {
+              _start = current_line - _medio;
+            }
+          _end = _start + _alto;
+        }
+    }
+
+  for (int cnt = _start; cnt <= _end; cnt++)
     {
       _CODE_LINE_ *line = (_CODE_LINE_ *)((char *)code->lines
                                           + (cnt - 1) * sizeof (_CODE_LINE_));
-      gotoxy (4 + cnt, 40);
+      gotoxy (5 + cnt - _start, 42);
+
+      printf ("%s", (cnt == current_line) ? COLOR_YELLOW_HIGH : COLOR_RESET);
+
       if (line->type == 0)
-        printf ("%s %03d %s %s",
-                (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
-                line->par1, COLOR_RESET);
+        sprintf (buffer, "%03d %s", cnt, line->par1);
       else
         {
           if (line->code_cmd >= NT_JMP && line->code_cmd < NT_JXX)
             {
               if (line->code_cmd == NT_RET)
                 {
-                  printf ("%s %03d   %04x %s",
-                          (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
-                          cnt, line->code_cmd, COLOR_RESET);
+                  sprintf (buffer, "%03d   %04x ", cnt, line->code_cmd);
                 }
               else if (line->jmp_label > 0)
                 {
-                  printf ("%s %03d   %04x %03d %s",
-                          (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET,
-                          cnt, line->code_cmd, line->jmp_label, COLOR_RESET);
+                  sprintf (buffer, "%03d   %04x %03d %s", cnt, line->code_cmd,
+                           line->jmp_label, COLOR_RESET);
                 }
             }
           else
             {
-              printf ("%s %03d   %04x %s %s %s",
-                      (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt,
-                      line->code_cmd, line->par1, line->par2, COLOR_RESET);
+              sprintf (buffer, "%03d   %04x %s %s", cnt, line->code_cmd,
+                       line->par1, line->par2);
             }
         }
+      printf ("%-30s", buffer);
       if (cnt == current_line)
         src_current_line = line->reference;
     }

@@ -12,12 +12,18 @@ _debug_start:
     stop
 
 _start:
+    push bp
+    mov bp sp
+
     ; define variable  'n'
-    num n 
+    num n
     store n 10
+
     push 0
     call _test_fn_call
-    pop ax
+
+    mov sp bp
+    pop bp
     stop
 
 ; ==============================
@@ -42,7 +48,6 @@ _test_fn_begin:
 
     ; --- Ini loop vars
     xor cx cx ; set 0 to cx
-    ; load bx n
 
 _test_fn_loop:
     cmp bx cx
@@ -63,11 +68,9 @@ _test_fn_loop_end:
 _test_int_80:
     push bp
     mov bp sp
-    push 1111
-    sub sp 4
-    push 2222 
 
-    int 80
+    syscall 80
+
     mov sp bp
     pop bp
     ret

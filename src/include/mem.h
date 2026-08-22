@@ -4,7 +4,7 @@
 typedef struct
 {
   char name[10];
-  char value[20];
+  char *value;
   int type;
   int len;
 } MEM_OBJ;

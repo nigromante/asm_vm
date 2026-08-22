@@ -71,13 +71,32 @@ source_get_line (int line)
 void
 source_dump (int current_line)
 {
-  for (int cnt = 1; cnt <= source->lines_cnt; cnt++)
+  int _alto = 30, _start = 1, _end = source->lines_cnt;
+  int _medio = _alto / 2;
+  char buffer[100];
+
+  if (_end > _alto)
+    {
+      if (current_line + _medio > _end)
+        {
+          _start = _end - _alto;
+        }
+      else
+        {
+          if (current_line > _medio)
+            {
+              _start = current_line - _medio;
+            }
+          _end = _start + _alto;
+        }
+    }
+  for (int cnt = _start; cnt <= _end; cnt++)
     {
       char *pline = source_get_line (cnt);
-      gotoxy (4 + cnt, 1);
-      printf ("%s %03d %s %s",
-              (cnt == current_line) ? COLOR_YELLOW : COLOR_RESET, cnt, pline,
-              COLOR_RESET);
+      gotoxy (5 + cnt - _start, 1);
+      printf ("%s", (cnt == current_line) ? COLOR_YELLOW_HIGH : COLOR_RESET);
+      sprintf (buffer, "%03d %s", cnt, pline);
+      printf ("%-40s", buffer);
     }
 }
 

@@ -42,18 +42,17 @@ cpu_run ()
           break;
         }
 
-      ciclos++;
+      ram->header->ciclos++;
       Reg_Backup ();
       exec_callback ();
     }
-  // exec_callback ();
   return 0;
 }
 
 int
 cpu_ciclos_total ()
 {
-  return ciclos;
+  return ram->header->ciclos;
 }
 
 // ------------------------------------------------------------------ Instance

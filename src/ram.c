@@ -49,6 +49,14 @@ ram_stack_sp2bp ()
 }
 
 // ---------------------------------------------------------------------- Heap
+PTR
+ram_heap_alloc (int n)
+{
+  PTR p = ram->ptr + ram->header->heap_end;
+  ram->header->heap_end += n;
+  memset (p, 0x00, n);
+  return p;
+}
 
 // --------------------------------------------------------------------- Dumps
 void
@@ -60,26 +68,26 @@ ram_dump ()
   for (int i = 0; i < RAM_SIZE; i += RAM_ITEM_SIZE)
     {
       int *value = (int *)p;
-      char c0 = *(p + 0);
-      char c1 = *(p + 1);
-      char c2 = *(p + 2);
-      char c3 = *(p + 3);
+      unsigned char c0 = *(p + 0);
+      unsigned char c1 = *(p + 1);
+      unsigned char c2 = *(p + 2);
+      unsigned char c3 = *(p + 3);
 
-      gotoxy (5 + l++, 70);
+      gotoxy (4 + l++, 72);
       {
 
-        printf ("%s %4d - ",
-                (i >= 0 && i < sizeof (_RAM_HEADER_))
-                    ? COLOR_CYAN
-                    : ((i >= _SP)
-                           ? (i <= _BP ? COLOR_YELLOW_HIGH : COLOR_YELLOW)
-                           : COLOR_RESET),
-                i);
-        printf ("%hhx%hhx%hhx%hhx %4d", (INT)c0, (INT)c1, (INT)c2, (INT)c3,
-                *value);
+        if (i >= 0 && i < sizeof (_RAM_HEADER_))
+          printf ("%s", COLOR_CYAN);
+        if (i >= sizeof (_RAM_HEADER_) && i < ram->header->heap_end)
+          printf ("%s", COLOR_ORANGE);
+        if (i >= _SP && i <= _BP)
+          printf ("%s", COLOR_YELLOW_HIGH);
+        if (i > _BP)
+          printf ("%s", COLOR_YELLOW);
 
-        printf (" %s", COLOR_RESET);
+        printf ("%3d %02x%02x%02x%02x %4d", i, c0, c1, c2, c3, *value);
       }
+      printf (" %s", COLOR_RESET);
       p += RAM_ITEM_SIZE;
     }
 }
@@ -100,12 +108,14 @@ ram_init ()
   ram->stack_bp2sp = ram_stack_bp2sp;
   ram->stack_sp2bp = ram_stack_sp2bp;
 
+  ram->heap_alloc = ram_heap_alloc;
+
   ram->ptr = (PTR)malloc (RAM_SIZE);
   memset (ram->ptr, 0x00, RAM_SIZE);
 
   ram->header = (_RAM_HEADER_ *)ram->ptr;
 
-  ram->header->heap_ini = 0;
+  ram->header->heap_ini = sizeof (_RAM_HEADER_);
   ram->header->heap_end = ram->header->heap_ini;
 
   ram->header->stack_ini = RAM_SIZE;

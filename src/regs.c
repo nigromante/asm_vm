@@ -116,6 +116,14 @@ regs_mov (char *reg_dest, char *reg_src)
 }
 
 void
+regs_mov_int (char *reg_dest, int value)
+{
+  char buffer[20];
+  sprintf (buffer, "%d", value);
+  regs_mov (reg_dest, buffer);
+}
+
+void
 regs_add (char *reg_dest, char *reg_src)
 {
   if (strcmp (reg_dest, "AX") == 0)
