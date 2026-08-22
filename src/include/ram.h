@@ -5,7 +5,7 @@
 #define RAM_MAX 1 //  KB
 #define RAM_ITEM_SIZE 4
 #define RAM_SEGMENT 64
-#define RAM_SIZE (RAM_SEGMENT * RAM_MAX)
+#define RAM_SIZE (RAM_SEGMENT * RAM_MAX + sizeof (_RAM_HEADER_))
 
 #define RAM_MAX_VAR 20
 
@@ -36,13 +36,13 @@ typedef struct
 
   char filler[12];
 
-} _RAM_HEADER;
+} _RAM_HEADER_;
 
 typedef struct
 {
   PTR ptr;
 
-  _RAM_HEADER *header;
+  _RAM_HEADER_ *header;
 
   void (*dump) ();
   int (*mem_avail) ();

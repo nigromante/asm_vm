@@ -46,7 +46,7 @@ cpu_run ()
       Reg_Backup ();
       exec_callback ();
     }
-  exec_callback ();
+  // exec_callback ();
   return 0;
 }
 

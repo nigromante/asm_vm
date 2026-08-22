@@ -1,7 +1,9 @@
 #ifndef VIO_H
 #define VIO_H
 
-#define COLOR_YELLOW "\033[1;33m"
+#define COLOR_YELLOW_HIGH "\033[1;33m"
+#define COLOR_YELLOW "\033[33m"
+#define COLOR_CYAN "\033[36m"
 #define COLOR_RESET "\033[0m"
 
 #ifdef VIO_C

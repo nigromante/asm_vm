@@ -17,6 +17,7 @@ _start:
     store n 10
     push 0
     call _test_fn_call
+    pop ax
     stop
 
 ; ==============================

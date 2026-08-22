@@ -12,7 +12,7 @@ run_pause_getchar ()
 void
 run_pause_sleep ()
 {
-  sleep_ms (100);
+  sleep_ms (70);
 }
 
 void

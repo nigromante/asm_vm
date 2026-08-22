@@ -57,12 +57,6 @@ ram_dump ()
   int l = 1;
   PTR p = ram->ptr;
 
-  gotoxy (5, 70);
-  printf ("SP : %4d ", _SP);
-
-  gotoxy (6, 70);
-  printf ("BP : %4d ", _BP);
-
   for (int i = 0; i < RAM_SIZE; i += RAM_ITEM_SIZE)
     {
       int *value = (int *)p;
@@ -70,10 +64,22 @@ ram_dump ()
       char c1 = *(p + 1);
       char c2 = *(p + 2);
       char c3 = *(p + 3);
-      gotoxy (8 + l++, 70);
-      printf ("%s %4d - %hhx%hhx%hhx%hhx %4d %s",
-              (i >= _SP && i <= _BP) ? COLOR_YELLOW : COLOR_RESET, i, (INT)c0,
-              (INT)c1, (INT)c2, (INT)c3, *value, COLOR_RESET);
+
+      gotoxy (5 + l++, 70);
+      {
+
+        printf ("%s %4d - ",
+                (i >= 0 && i < sizeof (_RAM_HEADER_))
+                    ? COLOR_CYAN
+                    : ((i >= _SP)
+                           ? (i <= _BP ? COLOR_YELLOW_HIGH : COLOR_YELLOW)
+                           : COLOR_RESET),
+                i);
+        printf ("%hhx%hhx%hhx%hhx %4d", (INT)c0, (INT)c1, (INT)c2, (INT)c3,
+                *value);
+
+        printf (" %s", COLOR_RESET);
+      }
       p += RAM_ITEM_SIZE;
     }
 }
@@ -97,7 +103,7 @@ ram_init ()
   ram->ptr = (PTR)malloc (RAM_SIZE);
   memset (ram->ptr, 0x00, RAM_SIZE);
 
-  ram->header = (_RAM_HEADER *)ram->ptr;
+  ram->header = (_RAM_HEADER_ *)ram->ptr;
 
   ram->header->heap_ini = 0;
   ram->header->heap_end = ram->header->heap_ini;

@@ -170,6 +170,7 @@ regs_mod (char *reg_dest, char *reg_src)
 void
 regs_sub (char *reg_dest, char *reg_src)
 {
+  ZF_Set (0);
   if (strcmp (reg_dest, "AX") == 0)
     {
       AX_Set (AX_Get () - Reg_Get (reg_src));
