@@ -1,8 +1,8 @@
 #ifndef NEMOTECHS_H
 #define NEMOTECHS_H
 
-#define NT_END 0x0100
-#define NT_NOP 0x0101
+#define NT_END 0x0000
+#define NT_NOP 0x0001
 
 #define NT_JMP 0x0200
 #define NT__JZ 0x0201
