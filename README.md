@@ -2,7 +2,7 @@
 
 ## Introducción
 
-[![asciicast](https://asciinema.org)](https://asciinema.org)
+[![asciicast](https://asciinema.org/a/OpDum9XcELKjAWFL)](Ver demo)
 
 
 
