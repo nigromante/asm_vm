@@ -87,6 +87,10 @@ debug:
 save:
 	@bash ../../scripts/save.sh $(TARGET) $(ASM_TEST_FILE) 
 
+.PHONY: play 
+play:
+	@bash ../../scripts/play.sh 
+
 .PHONY: profile
 profile:
 	@bash ../../scripts/profile.sh $(TARGET) $(ASM_TEST_FILE) 

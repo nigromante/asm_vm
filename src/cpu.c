@@ -29,6 +29,8 @@ cpu_run ()
 {
   while (1)
     {
+      Reg_Backup ();
+
       int line = IP_Get ();
       if (line <= 0)
         break;
@@ -43,16 +45,9 @@ cpu_run ()
         }
 
       ram->header->ciclos++;
-      Reg_Backup ();
       exec_callback ();
     }
   return 0;
-}
-
-int
-cpu_ciclos_total ()
-{
-  return ram->header->ciclos;
 }
 
 // ------------------------------------------------------------------ Instance
@@ -65,7 +60,6 @@ cpu_init ()
   cpu->run = cpu_run;
   cpu->set_trace = cpu_set_trace_callback;
   cpu->set_start = cpu_set_start;
-  cpu->ciclos_total = cpu_ciclos_total;
 }
 
 void

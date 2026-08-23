@@ -7,7 +7,6 @@ typedef struct
   void (*set_trace) (void (*fn) ());
   int (*run) ();
   void (*set_start) ();
-  int (*ciclos_total) ();
 } _CPU_;
 
 #ifdef CPU_C
