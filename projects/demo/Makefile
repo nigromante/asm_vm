@@ -83,6 +83,10 @@ run:
 debug:
 	@gdb $(TARGET) $(ASM_TEST_FILE)
 
+.PHONY: save
+save:
+	@bash ../../scripts/save.sh $(TARGET) $(ASM_TEST_FILE) 
+
 .PHONY: profile
 profile:
 	@bash ../../scripts/profile.sh $(TARGET) $(ASM_TEST_FILE) 
