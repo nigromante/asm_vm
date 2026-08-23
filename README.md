@@ -2,7 +2,8 @@
 
 ## Introducción
 
-[![asciicast](https://asciinema.org/a/OpDum9XcELKjAWFL)](Ver demo)
+
+![Terminal Demo](demo.gif)
 
 
 
