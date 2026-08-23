@@ -2,6 +2,7 @@
 
 ## Introducción
 
+[![asciicast](https://asciinema.org)](https://asciinema.org)
 
 
 
