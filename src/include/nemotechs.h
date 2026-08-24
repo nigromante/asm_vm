@@ -108,7 +108,6 @@ _NM_DATA_ nm_data[] = {
   { "STORE", NT_STORE },
 
   { "SYSCALL", NT_SYSCALL },
-  { "INT", NT_SYSCALL },
 };
 
 #endif

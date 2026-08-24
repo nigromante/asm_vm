@@ -5,7 +5,7 @@ _debug_start:
     mov bp sp
 
     push 5 ;  5 times loop
-    call _test_fn_start
+    call _test_call
 
     mov sp bp
     pop bp
@@ -20,24 +20,24 @@ _start:
     store n 10
 
     sub sp 4
-    call _test_fn_call
+    call _test_call
 
     mov sp bp
     pop bp
     stop
 
 ; ==============================
-_test_fn_call:
+_test_call:
     ; parametros por la pila
     mov bx [bp+4]  
 
     ; si no esta en la pila
     ; usar variable n
     cmp bx 0
-    jnz _test_fn_begin
+    jnz _test_begin
     load bx n
 
-_test_fn_begin:
+_test_begin:
 
     ; --- Prologue ---
     push bp
@@ -49,14 +49,14 @@ _test_fn_begin:
     ; --- Ini loop vars
     xor cx cx ; set 0 to cx
 
-_test_fn_loop:
+_test_loop:
     cmp bx cx
-    jz _test_fn_loop_end
-    call _test_int_80 
+    jz _test_loop_end
+    call _print 
     inc cx 
-    jmp _test_fn_loop
+    jmp _test_loop
 
-_test_fn_loop_end:
+_test_loop_end:
     ; Return value
     mov rx 667
 
@@ -65,11 +65,11 @@ _test_fn_loop_end:
     pop bp
     ret
 
-_test_int_80:
+_print:
     push bp
     mov bp sp
 
-    syscall 80
+    syscall 82
 
     mov sp bp
     pop bp

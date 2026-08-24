@@ -11,7 +11,6 @@
 #include <common.h>
 #include <cpu.h>
 #include <cpu_stmnt.h>
-#include <int.h>
 #include <mem.h>
 #include <nemotechs.h>
 #include <ram.h>
@@ -20,6 +19,7 @@
 #include <source.h>
 #include <stack.h>
 #include <stack_regs.h>
+#include <syscall.h>
 #include <vio.h>
 
 #ifdef START_C
