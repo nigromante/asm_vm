@@ -6,8 +6,9 @@
 #define COLOR_CYAN "\033[36m"
 #define COLOR_BLUE "\033[34m"
 #define COLOR_ORANGE "\033[38;5;208m"
-#define COLOR_RESET "\033[0m"
+#define COLOR_PURPLE "\033[0;35m"
 
+#define COLOR_RESET "\033[0m"
 #ifdef VIO_C
 int vio_offset = 0;
 #else

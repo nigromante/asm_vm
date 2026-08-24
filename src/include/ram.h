@@ -3,11 +3,21 @@
 
 // --- Constants
 #define RAM_MAX 1 //  KB
-#define RAM_ITEM_SIZE 4
-#define RAM_SEGMENT 92
-#define RAM_SIZE (RAM_SEGMENT * RAM_MAX + sizeof (_RAM_HEADER_))
+#define RAM_SEGMENT 64
+
+#define RAM_HEADER_SIZE sizeof (_RAM_HEADER_)
+
+#define RAM_DATA_MAX 1
+#define RAM_DATA_SIZE (RAM_SEGMENT * RAM_DATA_MAX)
+
+#define RAM_CODE_MAX 1
+#define RAM_CODE_SIZE (RAM_SEGMENT * RAM_CODE_MAX)
+
+#define RAM_SIZE (RAM_CODE_SIZE + RAM_DATA_SIZE + sizeof (_RAM_HEADER_))
 
 #define RAM_MAX_VAR 20
+
+#define RAM_ITEM_SIZE 4
 
 // Macros
 #define _BP ram->header->stack_ini

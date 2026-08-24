@@ -82,8 +82,10 @@ ram_dump ()
           printf ("%s", COLOR_ORANGE);
         if (i >= _SP && i <= _BP)
           printf ("%s", COLOR_YELLOW_HIGH);
-        if (i > _BP)
+        if (i > _BP && i < RAM_DATA_SIZE + RAM_HEADER_SIZE)
           printf ("%s", COLOR_YELLOW);
+        if (i >= RAM_DATA_SIZE + RAM_HEADER_SIZE)
+          printf ("%s", COLOR_PURPLE);
 
         printf ("%3d %02x%02x%02x%02x %4d", i, c0, c1, c2, c3, *value);
       }
@@ -118,7 +120,7 @@ ram_init ()
   ram->header->heap_ini = sizeof (_RAM_HEADER_);
   ram->header->heap_end = ram->header->heap_ini;
 
-  ram->header->stack_ini = RAM_SIZE;
+  ram->header->stack_ini = RAM_DATA_SIZE + RAM_HEADER_SIZE;
   ram->header->stack_end = ram->header->stack_ini;
 }
 

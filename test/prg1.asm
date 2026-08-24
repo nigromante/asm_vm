@@ -19,7 +19,7 @@ _start:
     num n
     store n 10
 
-    push 0
+    sub sp 4
     call _test_fn_call
 
     mov sp bp
