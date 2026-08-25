@@ -4,7 +4,6 @@
 void
 print_ax ()
 {
-
   gotoxy (5 + vout++, vio_offset);
   printf ("AX : %d  ", AX_Get ());
 }
@@ -12,7 +11,6 @@ print_ax ()
 void
 print_bx ()
 {
-
   gotoxy (5 + vout++, vio_offset);
   printf ("BX : %d  ", BX_Get ());
 }
@@ -20,7 +18,6 @@ print_bx ()
 void
 print_cx ()
 {
-
   gotoxy (5 + vout++, vio_offset);
   printf ("CX : %d  ", CX_Get ());
 }
@@ -28,7 +25,6 @@ print_cx ()
 void
 print_dx ()
 {
-
   gotoxy (5 + vout++, vio_offset);
   printf ("DX : %d  ", DX_Get ());
 }
