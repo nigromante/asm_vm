@@ -77,19 +77,19 @@ ram_dump ()
       {
 
         if (i >= 0 && i < sizeof (_RAM_HEADER_))
-          printf ("%s", COLOR_CYAN);
+          printf (COLOR_CYAN);
         if (i >= sizeof (_RAM_HEADER_) && i < ram->header->heap_end)
-          printf ("%s", COLOR_ORANGE);
+          printf (COLOR_ORANGE);
         if (i >= _SP && i <= _BP)
-          printf ("%s", COLOR_YELLOW_HIGH);
+          printf (COLOR_BOLD_YELLOW);
         if (i > _BP && i < RAM_DATA_SIZE + RAM_HEADER_SIZE)
-          printf ("%s", COLOR_YELLOW);
+          printf (COLOR_YELLOW);
         if (i >= RAM_DATA_SIZE + RAM_HEADER_SIZE)
-          printf ("%s", COLOR_PURPLE);
+          printf (COLOR_PURPLE);
 
         printf ("%3d %02x%02x%02x%02x %4d", i, c0, c1, c2, c3, *value);
       }
-      printf (" %s", COLOR_RESET);
+      printf (COLOR_RESET);
       p += RAM_ITEM_SIZE;
     }
 }

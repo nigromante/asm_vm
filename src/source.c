@@ -94,7 +94,7 @@ source_dump (int current_line)
     {
       char *pline = source_get_line (cnt);
       gotoxy (5 + cnt - _start, 1);
-      printf ("%s", (cnt == current_line) ? COLOR_YELLOW_HIGH : COLOR_RESET);
+      printf ("%s", (cnt == current_line) ? COLOR_BOLD_YELLOW : COLOR_RESET);
       sprintf (buffer, "%03d %s", cnt, pline);
       printf ("%-40s", buffer);
     }

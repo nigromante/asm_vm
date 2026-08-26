@@ -1,21 +1,42 @@
 #define VIO_C
 #include <start.h>
+#include <stdarg.h>
+
+void
+clrscr ()
+{
+  printf (CLRSCR);
+}
 
 void
 gotoxy (int row, int column)
 {
-  // \033 is the ESC character, H sets the cursor position
-  printf ("\033[%d;%df", row, column);
+  printf (GOTOXY, row, column);
 }
 
 void
 cursor_hide ()
 {
-  printf ("\e[?25l");
+  printf (CURSOR_HIDE);
 }
 
 void
 cursor_show ()
 {
-  printf ("\e[?25h");
+  printf (CURSOR_SHOW);
+}
+
+void
+print_at (int row, int col, char *fmt, ...)
+{
+  char buffer[100];
+
+  va_list va;
+  va_start (va, fmt);
+  vsprintf (buffer, fmt, va);
+  va_end (va);
+
+  gotoxy (row, col);
+
+  printf ("%s", buffer);
 }

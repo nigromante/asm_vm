@@ -11,6 +11,7 @@ loader_init ()
   code_init ();
   cpu_init ();
   ram_init ();
+  frame_init ();
 }
 
 __attribute__ ((destructor)) void
@@ -21,4 +22,5 @@ loader_end ()
   code_release ();
   cpu_release ();
   ram_release ();
+  frame_release ();
 }

@@ -1,3 +1,4 @@
+#include "nemotechs.h"
 #define CPU_C
 
 #include <start.h>
@@ -20,6 +21,7 @@ void
 cpu_set_start ()
 {
   char *global = code->get_global ();
+  frame->setCurrent (global);
   IP_Set (code->get_row_by_label (global));
 }
 
@@ -44,7 +46,9 @@ cpu_run ()
           break;
         }
 
-      ram->header->ciclos++;
+      if (stmnt->code_cmd != NT_NOP)
+        ram->header->ciclos++;
+
       exec_callback ();
     }
   return 0;

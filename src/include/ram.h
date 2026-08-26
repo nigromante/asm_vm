@@ -38,8 +38,7 @@ typedef struct
   INT stack_end;
   INT stack_ini;
 
-  char filler[8];
-
+  char current_label[20];
 } _RAM_HEADER_;
 
 typedef struct

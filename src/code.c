@@ -257,7 +257,7 @@ code_dump_full ()
                                           + (cnt - 1) * sizeof (_CODE_LINE_));
       gotoxy (5 + cnt - _start, 42);
 
-      printf ("%s", (cnt == current_line) ? COLOR_YELLOW_HIGH : COLOR_RESET);
+      printf ("%s", (cnt == current_line) ? COLOR_BOLD_YELLOW : COLOR_RESET);
 
       if (line->type == 0)
         sprintf (buffer, "%03d %s", cnt, line->par1);

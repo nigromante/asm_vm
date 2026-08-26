@@ -22,6 +22,7 @@ _start:
     sub sp 4
     call _test_call
 
+    syscall 82
     mov sp bp
     pop bp
     stop
@@ -53,10 +54,12 @@ _test_loop:
     cmp bx cx
     jz _test_loop_end
     call _print 
+    syscall 82
     inc cx 
     jmp _test_loop
 
 _test_loop_end:
+    syscall 82
     ; Return value
     mov rx 667
 

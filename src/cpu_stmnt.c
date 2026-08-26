@@ -3,8 +3,9 @@
 
 // -------------------------------------------------- Function Call Management
 int
-cpu_stmnt_call (int jmp_label)
+cpu_stmnt_call (int jmp_label, char *label)
 {
+  frame->push (label);
   _push (IP_Get () + 1);
   IP_Set (jmp_label);
   return 0;
@@ -13,14 +14,16 @@ cpu_stmnt_call (int jmp_label)
 int
 cpu_stmnt_ret ()
 {
+  frame->pop ();
   IP_Set (_pop ());
   return 0;
 }
 
 // ---------------------------------------------------------------------- Jump
 int
-cpu_stmnt_jmp (int row)
+cpu_stmnt_jmp (int row, char *label)
 {
+  frame->setCurrent (label);
   IP_Set (row);
   return 0;
 }
@@ -67,51 +70,54 @@ cpu_stmnt_eval (_CODE_LINE_ *stmnt)
 
   // ---------------------------------------------------------------- Comments
   else if (stmnt->code_cmd == NT_NOP)
-    cpu_stmnt_void ();
-
+    {
+      if (stmnt->type == 0)
+        frame->setCurrent (stmnt->par1);
+      cpu_stmnt_void ();
+    }
   // ------------------------------------------------------------------- Jumps
   else if (stmnt->code_cmd == NT_JMP)
-    return cpu_stmnt_jmp (stmnt->jmp_label);
+    return cpu_stmnt_jmp (stmnt->jmp_label, stmnt->par1);
 
   else if (stmnt->code_cmd == NT__JZ)
     {
       if (reg.ZF == 0)
-        return cpu_stmnt_jmp (stmnt->jmp_label);
+        return cpu_stmnt_jmp (stmnt->jmp_label, stmnt->par1);
     }
 
   else if (stmnt->code_cmd == NT_JNZ)
     {
       if (reg.ZF != 0)
-        return cpu_stmnt_jmp (stmnt->jmp_label);
+        return cpu_stmnt_jmp (stmnt->jmp_label, stmnt->par1);
     }
 
   else if (stmnt->code_cmd == NT_JGT)
     {
       if (reg.ZF == 1)
-        return cpu_stmnt_jmp (stmnt->jmp_label);
+        return cpu_stmnt_jmp (stmnt->jmp_label, stmnt->par1);
     }
 
   else if (stmnt->code_cmd == NT_JGE)
     {
       if (reg.ZF == 0 || reg.ZF == 1)
-        return cpu_stmnt_jmp (stmnt->jmp_label);
+        return cpu_stmnt_jmp (stmnt->jmp_label, stmnt->par1);
     }
 
   else if (stmnt->code_cmd == NT_JLT)
     {
       if (reg.ZF == -1)
-        return cpu_stmnt_jmp (stmnt->jmp_label);
+        return cpu_stmnt_jmp (stmnt->jmp_label, stmnt->par1);
     }
 
   else if (stmnt->code_cmd == NT_JLE)
     {
       if (reg.ZF == 0 || reg.ZF == -1)
-        return cpu_stmnt_jmp (stmnt->jmp_label);
+        return cpu_stmnt_jmp (stmnt->jmp_label, stmnt->par1);
     }
 
   // --------------------------------------------------------------- Functions
   else if (stmnt->code_cmd == NT_CALL)
-    return cpu_stmnt_call (stmnt->jmp_label);
+    return cpu_stmnt_call (stmnt->jmp_label, stmnt->par1);
 
   else if (stmnt->code_cmd == NT_RET)
     return cpu_stmnt_ret ();

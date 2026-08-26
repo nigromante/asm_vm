@@ -39,6 +39,8 @@ trace_callback_simple ()
 int
 execute (char *filename, int mode, int dump_level)
 {
+  clrscr ();
+
   if (mode == 2 || mode == 3)
     {
       vio_offset = 100; // Limite vertical para la salida

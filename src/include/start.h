@@ -11,6 +11,7 @@
 #include <common.h>
 #include <cpu.h>
 #include <cpu_stmnt.h>
+#include <frame.h>
 #include <mem.h>
 #include <nemotechs.h>
 #include <ram.h>

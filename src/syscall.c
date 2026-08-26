@@ -4,29 +4,29 @@
 void
 print_ax ()
 {
-  gotoxy (5 + vout++, vio_offset);
-  printf ("AX : %d  ", AX_Get ());
+  print_at (5 + vout++, vio_offset, "%-16s :: %-16s [ AX | %d ]",
+            frame->last (), frame->getCurrent (), AX_Get ());
 }
 
 void
 print_bx ()
 {
-  gotoxy (5 + vout++, vio_offset);
-  printf ("BX : %d  ", BX_Get ());
+  print_at (5 + vout++, vio_offset, "%-16s :: %-16s [ BX | %d ]",
+            frame->last (), frame->getCurrent (), BX_Get ());
 }
 
 void
 print_cx ()
 {
-  gotoxy (5 + vout++, vio_offset);
-  printf ("CX : %d  ", CX_Get ());
+  print_at (5 + vout++, vio_offset, "%-16s :: %-16s [ CX | %d ]",
+            frame->last (), frame->getCurrent (), CX_Get ());
 }
 
 void
 print_dx ()
 {
-  gotoxy (5 + vout++, vio_offset);
-  printf ("DX : %d  ", DX_Get ());
+  print_at (5 + vout++, vio_offset, "%-16s :: %-16s [ DX | %d ]",
+            frame->last (), frame->getCurrent (), DX_Get ());
 }
 
 void
