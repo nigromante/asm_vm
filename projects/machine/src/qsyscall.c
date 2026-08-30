@@ -40,7 +40,10 @@ qsyscall_run ()
   while (!tfinish)
     {
       if (!syscall_consume (&n, &_reg))
-        continue;
+        {
+          sleep_ms (100);
+          continue;
+        }
 
       switch (n)
         {
@@ -57,7 +60,5 @@ qsyscall_run ()
           print_dx ();
           break;
         }
-
-      sleep_ms (100);
     }
 }

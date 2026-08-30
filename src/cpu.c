@@ -2,6 +2,7 @@
 #define CPU_C
 
 #include <start.h>
+extern int tfinish;
 
 // ------------------------------------------------------------------ Callback
 void
@@ -29,7 +30,7 @@ cpu_set_start ()
 int
 cpu_run ()
 {
-  while (1)
+  while (!tfinish)
     {
       Reg_Backup ();
 

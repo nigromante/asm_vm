@@ -2,6 +2,8 @@
 
 int execute (char *filename, int mode, int dump_level);
 void qsyscall_run ();
+void tinput_run ();
+
 int tfinish = 0;
 
 typedef struct
@@ -29,6 +31,13 @@ thread_sys (void *param)
   return NULL;
 }
 
+void *
+thread_input (void *param)
+{
+  tinput_run ();
+  return NULL;
+}
+
 int
 thread_ini (char *filename, int mode, int dump_level)
 {
@@ -37,8 +46,9 @@ thread_ini (char *filename, int mode, int dump_level)
   param.mode = mode;
   param.dump_level = dump_level;
 
-  pthread_t t_proc, t_sys;
+  pthread_t t_proc, t_sys, t_input;
 
+  pthread_create (&t_input, NULL, thread_input, NULL);
   pthread_create (&t_proc, NULL, thread_proc, &param);
   pthread_create (&t_sys, NULL, thread_sys, &param);
 

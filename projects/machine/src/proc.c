@@ -21,7 +21,7 @@ trace_callback_full ()
   code->dump ();
   regs_dump ();
   ram->dump ();
-  mem_dump ();
+  // mem_dump ();
   pausa ();
 }
 
