@@ -1,24 +1,7 @@
 #include <start.h>
 #include <unistd.h>
 
-int execute (char *filename, int mode, int dump_level);
-
-void
-thread_proc ()
-{
-}
-
-void
-thread_sys ()
-{
-}
-
-int
-thread_ini (char *filename, int mode, int dump_level)
-{
-
-  return execute (filename, mode, dump_level);
-}
+int thread_ini (char *filename, int mode, int dump_level);
 
 // -------------------------------------------------------- Usage Instructions
 void
