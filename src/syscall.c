@@ -1,50 +1,41 @@
 #define INT_C
 #include <start.h>
 
-void
-print_ax ()
+typedef struct
 {
-  print_at (5 + vout++, vio_offset, "%-16s :: %-16s [ AX | %d ]",
-            frame->last (), frame->getCurrent (), AX_Get ());
+  int n;
+  _REG_ reg;
+} _SCALL_BFFR_;
+
+_SCALL_BFFR_ sc_bffr[20];
+int sc_bffr_ini = 0;
+int sc_bffr_end = 0;
+
+#define _INC_(x)                                                              \
+  do                                                                          \
+    {                                                                         \
+      x = (x + 1) % 20;                                                       \
+    }                                                                         \
+  while (0)
+
+int
+syscall_consume (int *n, _REG_ *_reg)
+{
+  if (sc_bffr_ini == sc_bffr_end)
+    return 0;
+
+  _SCALL_BFFR_ *p = (sc_bffr + sc_bffr_ini);
+  *n = p->n;
+  memcpy ((_REG_ *)_reg, &(p->reg), sizeof (_REG_));
+  _INC_ (sc_bffr_ini);
+  return 1;
 }
 
 void
-print_bx ()
+syscall_produce (int n, _REG_ *_reg)
 {
-  print_at (5 + vout++, vio_offset, "%-16s :: %-16s [ BX | %d ]",
-            frame->last (), frame->getCurrent (), BX_Get ());
-}
-
-void
-print_cx ()
-{
-  print_at (5 + vout++, vio_offset, "%-16s :: %-16s [ CX | %d ]",
-            frame->last (), frame->getCurrent (), CX_Get ());
-}
-
-void
-print_dx ()
-{
-  print_at (5 + vout++, vio_offset, "%-16s :: %-16s [ DX | %d ]",
-            frame->last (), frame->getCurrent (), DX_Get ());
-}
-
-void
-syscall_manager (int n)
-{
-  switch (n)
-    {
-    case 80:
-      print_ax ();
-      break;
-    case 81:
-      print_bx ();
-      break;
-    case 82:
-      print_cx ();
-      break;
-    case 83:
-      print_dx ();
-      break;
-    }
+  _SCALL_BFFR_ *p = (sc_bffr + sc_bffr_end);
+  p->n = n;
+  memcpy (&(p->reg), _reg, sizeof (_REG_));
+  _INC_ (sc_bffr_end);
 }

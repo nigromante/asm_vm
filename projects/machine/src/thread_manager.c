@@ -2,6 +2,7 @@
 
 int execute (char *filename, int mode, int dump_level);
 void qsyscall_run ();
+int tfinish = 0;
 
 typedef struct
 {
@@ -16,6 +17,7 @@ thread_proc (void *param)
   _THREAD_PARAM_ *p = (_THREAD_PARAM_ *)param;
 
   execute (p->filename, p->mode, p->dump_level);
+  tfinish = 1;
   return NULL;
 }
 

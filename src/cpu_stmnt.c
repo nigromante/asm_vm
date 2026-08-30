@@ -195,7 +195,7 @@ cpu_stmnt_eval (_CODE_LINE_ *stmnt)
 
   // -------------------------------------------------------------- Interrupts
   else if (stmnt->code_cmd == NT_SYSCALL)
-    syscall_manager (atoi (stmnt->par1));
+    syscall_produce (atoi (stmnt->par1), &reg);
 
   // ------------------------------------------------- Undefined Command Error
   else

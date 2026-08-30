@@ -7,6 +7,7 @@ int vout = 0;
 
 #endif
 
-void syscall_manager (int n);
+void syscall_produce (int n, _REG_ *_reg);
+int syscall_consume (int *n, _REG_ *_reg);
 
 #endif
