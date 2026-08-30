@@ -260,7 +260,7 @@ code_dump_full ()
       printf ("%s", (cnt == current_line) ? COLOR_BOLD_YELLOW : COLOR_RESET);
 
       if (line->type == 0)
-        sprintf (buffer, "%03d %s", cnt, line->par1);
+        sprintf (buffer, "%03d %04d %s", cnt, line->code_cmd, line->par1);
       else
         {
           if (line->code_cmd >= NT_JMP && line->code_cmd < NT_JXX)
