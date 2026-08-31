@@ -3,34 +3,6 @@
 #include <start.h>
 #include <sys/stat.h>
 
-// -------------------------------------------------------------------- Global
-void
-code_global_load ()
-{
-  strcpy (code->global_label, CODE_LBL_START);
-  int row_count = source->count_lines ();
-
-  for (int row = 1; row <= row_count; row++)
-    {
-
-      char *line = source->get_line (row);
-      char *p = strstr (line, CODE_LBL_GLOBAL);
-      if (p)
-        {
-          p = p + strlen (CODE_LBL_GLOBAL);
-          strcpy (code->global_label, p);
-          trim (code->global_label);
-          break;
-        }
-    }
-}
-
-char *
-code_global_get ()
-{
-  return code->global_label;
-}
-
 // --------------------------------------------------------------------- Lines
 int
 code_line_check (char *line)
@@ -52,9 +24,9 @@ int
 code_line_count ()
 {
   int cnt = 0;
-  int row_count = source->count_lines ();
+  int row_count = preproc->count_lines ();
   for (int row = 1; row <= row_count; row++)
-    if (code_line_check (source->get_line (row)))
+    if (code_line_check (preproc->get_line (row)))
       cnt++;
 
   return cnt;
@@ -72,10 +44,10 @@ void
 code_line_read ()
 {
   int cnt = 0;
-  int row_count = source->count_lines ();
+  int row_count = preproc->count_lines ();
   for (int row = 1; row <= row_count; row++)
     {
-      char *linea = source->get_line (row);
+      char *linea = preproc->get_line (row);
       if (code_line_check (linea))
         {
           _CODE_LINE_ *line = (_CODE_LINE_ *)((char *)code->lines
@@ -208,7 +180,6 @@ code_post_load ()
 void
 code_load ()
 {
-  code_global_load ();
   code_line_load ();
   code_label_load ();
 
@@ -318,8 +289,8 @@ code_save (char *filename)
 
   memset (&hdr, 0x00, sizeof (struct header));
 
-  strcpy (hdr.global, code->global_label);
-  hdr.row = code->get_row_by_label (code->get_global ());
+  strcpy (hdr.global, preproc->global ());
+  hdr.row = code->get_row_by_label (hdr.global);
 
   FILE *fp = fopen (filename, "wb");
   fwrite (&hdr, 1, sizeof (struct header), fp);
@@ -347,7 +318,7 @@ code_read (char *filename)
 
   FILE *fp = fopen (filename, "rb");
   fread (&hdr, 1, sizeof (struct header), fp);
-  strcpy (code->global_label, hdr.global);
+  preproc->set_global (hdr.global);
   IP_Set (hdr.row);
   fread (code->lines, 1, code->lines_cnt * sizeof (_CODE_LINE_), fp);
   fclose (fp);
@@ -365,7 +336,6 @@ code_init ()
   code->dump_type = code_dump_type;
   code->save = code_save;
   code->read = code_read;
-  code->get_global = code_global_get;
   code->get_line = code_line_get;
   code->get_row_by_label = code_label_get;
 }

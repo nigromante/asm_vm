@@ -24,8 +24,6 @@ typedef struct
 typedef struct
 {
 
-  char global_label[100];
-
   _CODE_LINE_ *lines;
   int lines_cnt;
 
@@ -40,7 +38,6 @@ typedef struct
   void (*save) (char *filename);
 
   void (*dump_type) (int tipo);
-  char *(*get_global) ();
 
   _CODE_LINE_ *(*get_line) (int row_number);
   int (*get_row_by_label) (char *labelname);

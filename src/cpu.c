@@ -21,7 +21,7 @@ cpu_set_trace_callback (void (*fn) ())
 void
 cpu_set_start ()
 {
-  char *global = code->get_global ();
+  char *global = preproc->global ();
   frame->setCurrent (global);
   IP_Set (code->get_row_by_label (global));
 }

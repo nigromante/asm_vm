@@ -64,6 +64,7 @@ execute (char *filename, int mode, int dump_level)
     }
 
   source->load (filename);
+  preproc->load ();
   code->load ();
 
   cursor_hide ();

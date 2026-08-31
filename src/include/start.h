@@ -23,6 +23,7 @@
 #include <syscall.h>
 #include <vio.h>
 
+#include <preproc.h>
 #ifdef START_C
 
 #else

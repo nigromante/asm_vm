@@ -12,6 +12,7 @@ loader_init ()
   cpu_init ();
   ram_init ();
   frame_init ();
+  preproc_init ();
 }
 
 __attribute__ ((destructor)) void
@@ -23,4 +24,5 @@ loader_end ()
   cpu_release ();
   ram_release ();
   frame_release ();
+  preproc_release ();
 }
