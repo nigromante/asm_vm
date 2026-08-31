@@ -12,7 +12,7 @@ run_pause_getchar ()
 void
 run_pause_sleep ()
 {
-  sleep_ms (100);
+  sleep_ms (10);
 }
 
 void
@@ -71,7 +71,7 @@ execute (char *filename, int mode, int dump_level)
   int ret = cpu->run ();
   cursor_show ();
 
-  gotoxy (50, 1);
-  printf ("\n total de ciclos : %d \n", ram->header->ciclos);
+  //  gotoxy (50, 1);
+  //  printf ("\n total de ciclos : %d \n", ram->header->ciclos);
   return ret;
 }

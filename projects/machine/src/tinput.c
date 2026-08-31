@@ -31,6 +31,6 @@ tinput_run ()
       if (c == 'q')
         tfinish = 1;
 
-      printf ("[%c]", c);
+      // printf ("[%c]", c);
     }
 }
