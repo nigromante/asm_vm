@@ -3,6 +3,7 @@
 int execute (char *filename, int mode, int dump_level);
 void qsyscall_run ();
 void tinput_run ();
+void gpu_run ();
 
 int tfinish = 0;
 
@@ -38,6 +39,13 @@ thread_input (void *param)
   return NULL;
 }
 
+void *
+thread_gpu (void *param)
+{
+  gpu_run ();
+  return NULL;
+}
+
 int
 thread_ini (char *filename, int mode, int dump_level)
 {
@@ -46,14 +54,17 @@ thread_ini (char *filename, int mode, int dump_level)
   param.mode = mode;
   param.dump_level = dump_level;
 
-  pthread_t t_proc, t_sys, t_input;
+  pthread_t t_proc, t_sys, t_input, t_gpu;
 
   pthread_create (&t_input, NULL, thread_input, NULL);
   pthread_create (&t_proc, NULL, thread_proc, &param);
   pthread_create (&t_sys, NULL, thread_sys, &param);
+  pthread_create (&t_gpu, NULL, thread_gpu, NULL);
 
   pthread_join (t_proc, NULL);
   pthread_join (t_sys, NULL);
+  pthread_join (t_input, NULL);
+  pthread_join (t_gpu, NULL);
 
   return 0;
 }
