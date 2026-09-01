@@ -11,7 +11,7 @@ execute (char *filename, char *fileoutput)
   preproc->load ();
   code->load ();
 
-  code->save (fileoutput);
+  code_save (fileoutput);
   return 0;
 }
 

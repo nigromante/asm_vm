@@ -30,12 +30,15 @@ typedef struct
   _CODE_LABEL_ *labels;
   int labels_cnt;
 
+  // --- global
+  char global_label[100];
+
   // -------------- public methods
   void (*load) ();
   void (*dump) ();
 
-  void (*read) (char *filename);
-  void (*save) (char *filename);
+  char *(*global_get) ();
+  void (*global_set) (char *label);
 
   void (*dump_type) (int tipo);
 

@@ -280,54 +280,17 @@ code_dump_type (int type)
     code_dump_fn = code_dump_full;
 }
 
-// ---------------------------------------------------------------------- Save
+// -------------------------------------------------------------------- Global
 void
-code_save (char *filename)
+code_global_set (char *label)
 {
-  struct header
-  {
-    char global[20];
-    int row;
-    char fill[76];
-  } hdr;
-
-  memset (&hdr, 0x00, sizeof (struct header));
-
-  strcpy (hdr.global, preproc->global ());
-  hdr.row = code->get_row_by_label (hdr.global);
-
-  FILE *fp = fopen (filename, "wb");
-  fwrite (&hdr, 1, sizeof (struct header), fp);
-  fwrite (code->lines, 1, code->lines_cnt * sizeof (_CODE_LINE_), fp);
-  fclose (fp);
+  strcpy (code->global_label, label);
 }
 
-// ---------------------------------------------------------------------- Read
-void
-code_read (char *filename)
+char *
+code_global_get ()
 {
-  struct stat st;
-  struct header
-  {
-    char global[20];
-    int row;
-    char fill[76];
-  } hdr;
-  stat (filename, &st);
-
-  code->lines_cnt = (st.st_size - sizeof (hdr)) / sizeof (_CODE_LINE_);
-
-  code->lines = (_CODE_LINE_ *)malloc (code->lines_cnt * sizeof (_CODE_LINE_));
-  memset (code->lines, 0x00, code->lines_cnt * sizeof (_CODE_LINE_));
-
-  FILE *fp = fopen (filename, "rb");
-  fread (&hdr, 1, sizeof (struct header), fp);
-  // preproc->set_global (hdr.global);
-  IP_Set (hdr.row);
-  fread (code->lines, 1, code->lines_cnt * sizeof (_CODE_LINE_), fp);
-  fclose (fp);
-  printf (" **** %d\n", code->lines_cnt);
-  printf (" **** %d\n", hdr.row);
+  return code->global_label;
 }
 
 // ------------------------------------------------------------------ Instance
@@ -340,10 +303,11 @@ code_init ()
   code->load = code_load;
   code->dump = code_dump;
   code->dump_type = code_dump_type;
-  code->save = code_save;
-  code->read = code_read;
   code->get_line = code_line_get;
   code->get_row_by_label = code_label_get;
+
+  code->global_get = code_global_get;
+  code->global_set = code_global_set;
 }
 
 void

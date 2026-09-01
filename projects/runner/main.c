@@ -7,7 +7,7 @@ int
 execute (char *filename)
 {
 
-  code->read (filename);
+  code_read (filename);
 
   cursor_hide ();
   int ret = cpu->run ();
