@@ -77,7 +77,7 @@ install:
 # ------------------------------------------------------------------- Executes
 .PHONY: run
 run:
-	@$(TARGET) -f $(ASM_TEST_FILE)   
+	@$(TARGET) -f $(ASM_TEST_FILE)  
 
 .PHONY: debug
 debug:

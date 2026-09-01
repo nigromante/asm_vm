@@ -322,10 +322,12 @@ code_read (char *filename)
 
   FILE *fp = fopen (filename, "rb");
   fread (&hdr, 1, sizeof (struct header), fp);
-  preproc->set_global (hdr.global);
+  // preproc->set_global (hdr.global);
   IP_Set (hdr.row);
   fread (code->lines, 1, code->lines_cnt * sizeof (_CODE_LINE_), fp);
   fclose (fp);
+  printf (" **** %d\n", code->lines_cnt);
+  printf (" **** %d\n", hdr.row);
 }
 
 // ------------------------------------------------------------------ Instance

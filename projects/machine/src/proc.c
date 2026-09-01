@@ -12,16 +12,16 @@ run_pause_getchar ()
 void
 run_pause_sleep ()
 {
-  sleep_ms (10);
+  sleep_ms (100);
 }
 
 void
 trace_callback_full ()
 {
   code->dump ();
-  regs_dump ();
-  ram->dump ();
-  mem_dump ();
+  // regs_dump ();
+  // ram->dump ();
+  //  mem_dump ();
   pausa ();
 }
 

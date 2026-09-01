@@ -1,11 +1,14 @@
 #include <start.h>
 #include <unistd.h>
 
+int tfinish = 0;
+
 // ------------------------------------------------------------------ Executes
 int
 execute (char *filename, char *fileoutput)
 {
   source->load (filename);
+  preproc->load ();
   code->load ();
 
   code->save (fileoutput);

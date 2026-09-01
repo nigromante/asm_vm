@@ -1,6 +1,8 @@
 #include <start.h>
 #include <unistd.h>
 
+int tfinish = 0;
+
 int
 execute (char *filename)
 {
