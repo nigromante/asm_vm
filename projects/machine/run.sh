@@ -16,6 +16,6 @@ else
     arch="$(ls -l ../../test/*.asm | awk '{print NR, $9}' | grep "^$2 " | awk '{print $2}')"
     echo "  [${arch}]"
     if [[ "$arch" != "" ]]; then
-        $1 -f $arch -V -b 
+        $1 -f $arch -V -a 
     fi
 fi
