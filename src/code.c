@@ -63,8 +63,12 @@ code_line_read ()
           trim (linea_buffer);
 
           line->reference = row;
-
-          if (*(linea_buffer + strlen (linea_buffer) - 1) == ':')
+          if (isDefine (linea_buffer))
+            {
+              line->code_cmd = NT_NOP;
+              line->type = 2;
+            }
+          else if (*(linea_buffer + strlen (linea_buffer) - 1) == ':')
             {
               strcpy (line->par1, linea_buffer);
               *(line->par1 + strlen (line->par1) - 1) = 0x00;
@@ -202,7 +206,7 @@ code_dump_full ()
 {
   int current_line = IP_Get ();
   int src_current_line = 0;
-  int _alto = 30, _start = 1, _end = code->lines_cnt;
+  int _alto = 50, _start = 1, _end = code->lines_cnt;
   int _medio = _alto / 2;
   char buffer[100];
 

@@ -41,7 +41,7 @@ qsyscall_run ()
     {
       if (!syscall_consume (&n, &_reg))
         {
-          sleep_ms (100);
+          sleep_ms (3);
           continue;
         }
 

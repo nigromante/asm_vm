@@ -24,4 +24,6 @@ void mem_dump ();
 void mem_declare (char *variable, int type, int size);
 void mem_load (char *registro, char *variable);
 void mem_store (char *variable, char *registro);
+void mem_store_db (char *variable, char *data, int len);
+void mem_store_dw (char *variable, char *data);
 #endif

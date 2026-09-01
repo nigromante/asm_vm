@@ -71,7 +71,7 @@ source_get_line (int line)
 void
 source_dump (int current_line)
 {
-  int _alto = 30, _start = 1, _end = source->lines_cnt;
+  int _alto = 50, _start = 1, _end = source->lines_cnt;
   int _medio = _alto / 2;
   char buffer[100];
 

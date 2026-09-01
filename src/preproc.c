@@ -11,16 +11,17 @@ preproc_load ()
 
   preproc->lines_cnt = source->lines_cnt;
 
-  preproc->lines
-      = (_SOURCE_LINE_ *)malloc (preproc->lines_cnt * sizeof (_SOURCE_LINE_));
-  memset (preproc->lines, 0x00, preproc->lines_cnt * sizeof (_SOURCE_LINE_));
+  preproc->lines = (_PREPROC_LINE_ *)malloc (preproc->lines_cnt
+                                             * sizeof (_PREPROC_LINE_));
+  memset (preproc->lines, 0x00, preproc->lines_cnt * sizeof (_PREPROC_LINE_));
 
   memcpy (preproc->lines, source->lines,
           preproc->lines_cnt * sizeof (_SOURCE_LINE_));
 
   for (int row = 1; row <= preproc->lines_cnt; row++)
     {
-      char *line = (char *)&(preproc->lines[row - 1]);
+      _PREPROC_LINE_ *pline = &(preproc->lines[row - 1]);
+      char *line = pline->line;
       trim (line);
       if (*line == ';')
         *line = 0x00;
@@ -36,12 +37,24 @@ preproc_load ()
               trim (line);
             }
 
+          // Encuentra Global Label
           p = strstr (line, CODE_LBL_GLOBAL);
           if (p && !*(preproc->global_label))
             {
               p = p + strlen (CODE_LBL_GLOBAL);
               strcpy (preproc->global_label, p);
               trim (preproc->global_label);
+            }
+
+          if (isDefine (line))
+            {
+              callDefine (line);
+            }
+
+          // Labels count
+          if (*(line + strlen (line) - 1) == ':')
+            {
+              preproc->label_cnt++;
             }
         }
     }

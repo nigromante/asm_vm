@@ -44,6 +44,21 @@ mem_store (char *variable, char *registro)
   memcpy (addr->value, &value, sizeof (value));
 }
 
+void
+mem_store_db (char *variable, char *data, int len)
+{
+  MEM_OBJ *addr = mem_getptr (variable);
+  memcpy (addr->value, data, len);
+}
+
+void
+mem_store_dw (char *variable, char *data)
+{
+  int value = atoi (data);
+  MEM_OBJ *addr = mem_getptr (variable);
+  memcpy (addr->value, &value, sizeof (int));
+}
+
 // --------------------------------------------------------------------- Debug
 void
 mem_dump ()

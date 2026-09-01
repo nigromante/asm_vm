@@ -1,6 +1,8 @@
 #include <start.h>
 #include <unistd.h>
 
+int tfinish = 1;
+
 void (*pausa) ();
 
 void
@@ -56,9 +58,10 @@ execute (char *filename, int mode, int dump_level)
           code->dump_type (1);
           cpu->set_trace (trace_callback_full);
         }
-
-      // Define que rutina de pausa usar en rutina trace
-      pausa = run_pause_getchar;
+      C
+          // Define que rutina de pausa usar en rutina trace
+          pausa
+          = run_pause_getchar;
       if (mode == 3)
         pausa = run_pause_sleep;
     }

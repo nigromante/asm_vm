@@ -1,4 +1,5 @@
     global _start
+    dw N 10
 
 _debug_start:
     push bp
@@ -16,8 +17,8 @@ _start:
     mov bp sp
 
     ; define variable  'n'
-    num n
-    store n 10
+    ;num n
+    ;store n 10
 
     sub sp 4
     call _test_call

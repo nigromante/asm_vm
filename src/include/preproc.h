@@ -3,10 +3,21 @@
 
 typedef struct
 {
-  _SOURCE_LINE_ *lines;
+  //  unsigned char type;
+  char line[100];
+} _PREPROC_LINE_;
+
+typedef struct
+{
+  // Lines
+  _PREPROC_LINE_ *lines;
   int lines_cnt;
 
+  // global
   char global_label[100];
+
+  // Labels
+  int label_cnt;
 
   void (*load) ();
   void (*dump) ();
@@ -14,7 +25,7 @@ typedef struct
   char *(*get_line) (int row);
 
   char *(*global) ();
-  char (*set_global) (char *label);
+  void (*set_global) (char *label);
 
 } _PREPROC_;
 

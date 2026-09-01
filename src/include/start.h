@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <define.h>
+
 #include <code.h>
 #include <common.h>
 #include <cpu.h>

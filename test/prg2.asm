@@ -1,10 +1,8 @@
     global _start
 
+    dw n 3 
+    db nombre julian vidal alarcon
 _start:
-    nop
-    nop
-    nop
-    nop
     mov cx 99
     int 80
     end
