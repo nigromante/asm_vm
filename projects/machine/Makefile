@@ -12,7 +12,7 @@ TARGETNAME:=machine
 ASM_TEST_FILE:=../../test/prg1.asm
 
 #	Source Folders ------------------------------------------------------------
-SRCDIR:=../../src
+SRCDIR:=./lib
 SRCDIR2:=./src
 
 #	Work Folders --------------------------------------------------------------
@@ -45,7 +45,7 @@ TARGET:=$(BINDIR)/$(TARGETNAME)
 
 
 #	Libs (Dependencies) Folders -----------------------------------------------
-LIBSDIR:=../run/debug/libs
+LIBSDIR:=./lib
 INCDIR:=$(LIBSDIR)/include
 LIBDIR:=$(LIBSDIR)/bin
 
@@ -53,7 +53,7 @@ LIBDIR:=$(LIBSDIR)/bin
 # Compiler Flags --------------------------------------------------------------
 CC:=gcc
 CCFLAGS:=-c -g -Wall 
-INCLUDE:=-I $(SRCDIR)/include -I $(INCDIR)
+INCLUDE:=-I $(SRCDIR2)/include -I $(INCDIR)
 DEPFLAGS = -MMD -MP -MF $(DEPDIR)/$*.d 
 
 # Linker Flags ----------------------------------------------------------------

@@ -1,4 +1,6 @@
 #include <pthread.h>
+#include <stdio.h>
+#include <vio.h>
 
 int execute (char *filename, int mode, int dump_level);
 void qsyscall_run ();
@@ -54,17 +56,20 @@ thread_ini (char *filename, int mode, int dump_level)
   param.mode = mode;
   param.dump_level = dump_level;
 
-  pthread_t t_proc, t_sys, t_input, t_gpu;
+  pthread_t t_proc, t_sys;
+  // pthread_t t_proc, t_sys, t_input, t_gpu;
 
-  pthread_create (&t_input, NULL, thread_input, NULL);
+  //  pthread_create (&t_input, NULL, thread_input, NULL);
   pthread_create (&t_proc, NULL, thread_proc, &param);
   pthread_create (&t_sys, NULL, thread_sys, &param);
-  pthread_create (&t_gpu, NULL, thread_gpu, NULL);
+  //  pthread_create (&t_gpu, NULL, thread_gpu, NULL);
 
   pthread_join (t_proc, NULL);
   pthread_join (t_sys, NULL);
-  pthread_join (t_input, NULL);
-  pthread_join (t_gpu, NULL);
+  //  pthread_join (t_input, NULL);
+  // pthread_join (t_gpu, NULL);
 
+  gotoxy (56, 1);
+  printf ("** End");
   return 0;
 }

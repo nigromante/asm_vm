@@ -1,0 +1,4 @@
+-I
+./src/include
+-I
+./lib/include
