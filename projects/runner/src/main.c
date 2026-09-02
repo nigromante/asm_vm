@@ -3,13 +3,19 @@
 
 int tfinish = 0;
 
+void
+eval_define_callback (char *line)
+{
+  callDefine (line);
+}
+
 int
 execute (char *filename)
 {
-
-  code_read (filename);
-
   cursor_hide ();
+
+  int start_IP = code_read (filename, eval_define_callback);
+  IP_Set (start_IP);
   int ret = cpu->run ();
   cursor_show ();
 

@@ -27,6 +27,8 @@ typedef struct
   char *(*global) ();
   void (*set_global) (char *label);
 
+  void (*eval_defines) (void (*callback) (char *, void *), void *);
+
 } _PREPROC_;
 
 #ifdef PREPROC_C

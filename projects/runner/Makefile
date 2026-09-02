@@ -12,7 +12,8 @@ TARGETNAME:=asmvmr
 ASM_TEST_FILE:=../../test/prg1.asm.o
 
 #	Source Folders ------------------------------------------------------------
-SRCDIR:=../../src
+SRCDIR:=./lib
+SRCDIR2:=./src
 
 #	Work Folders --------------------------------------------------------------
 WRKDIR:=./debug
@@ -32,11 +33,19 @@ DEPS:=$(subst $(SRCDIR),$(DEPDIR),$(DEPSTMP))
 OBJSTMP:=$(patsubst %.c,%.o,$(SRCS))
 OBJS:=$(subst $(SRCDIR),$(OBJDIR),$(OBJSTMP))
 
+SRCS2:=$(shell find $(SRCDIR2) -name "*.c")
+	
+DEPSTMP2:=$(SRCS2:.c=.d)
+DEPS2:=$(subst $(SRCDIR2),$(DEPDIR2),$(DEPSTMP2))
+
+OBJSTMP2:=$(patsubst %.c,%.o,$(SRCS2))
+OBJS2:=$(subst $(SRCDIR2),$(OBJDIR),$(OBJSTMP2))
+
 TARGET:=$(BINDIR)/$(TARGETNAME)
 
 
 #	Libs (Dependencies) Folders -----------------------------------------------
-LIBSDIR:=../run/debug/libs
+LIBSDIR:=./lib
 INCDIR:=$(LIBSDIR)/include
 LIBDIR:=$(LIBSDIR)/bin
 
@@ -44,7 +53,7 @@ LIBDIR:=$(LIBSDIR)/bin
 # Compiler Flags --------------------------------------------------------------
 CC:=gcc
 CCFLAGS:=-c -g -Wall 
-INCLUDE:=-I $(SRCDIR)/include -I $(INCDIR)
+INCLUDE:=-I $(SRCDIR2)/include -I $(INCDIR)
 DEPFLAGS = -MMD -MP -MF $(DEPDIR)/$*.d 
 
 # Linker Flags ----------------------------------------------------------------
@@ -89,7 +98,7 @@ profile:
 
 
 # ------------------------------------------------------------------- Compile
-$(TARGET): $(OBJS) main.o
+$(TARGET): $(OBJS) $(OBJS2)
 	$(info  )
 	$(info Linking ... )
 	@echo -n "\t${YELLOW}"  
@@ -105,10 +114,13 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CCFLAGS) $(DEPFLAGS) $(INCLUDE) $< -o $@
 	@echo -n "${RESET}"  
 
-main.o: main.c
+-include $(DEPS2)
+
+$(OBJDIR)/%.o: $(SRCDIR2)/%.c 
 	@echo -n "\t${YELLOW}"  
 	$(CC) $(CCFLAGS) $(DEPFLAGS) $(INCLUDE) $< -o $@
 	@echo -n "${RESET}"  
+
 
 # ---------------------------------------------------------------------- Helps
 

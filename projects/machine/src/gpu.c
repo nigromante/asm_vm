@@ -1,3 +1,4 @@
+#include <gpu.h>
 #include <start.h>
 
 extern int tfinish;
@@ -5,16 +6,20 @@ extern int tfinish;
 void
 gpu_instance ()
 {
+  gpu_main ();
 }
 
 void
 gpu_release ()
 {
+  glutLeaveMainLoop ();
+  glutDestroyWindow (glutGetWindow ());
 }
 
 void
 gpu_proc ()
 {
+  glutMainLoopEvent ();
 }
 
 void
@@ -29,11 +34,10 @@ gpu_run ()
     {
       if (!syscall_consume (&n, &_reg))
         {
-          sleep_ms (100);
+          gpu_proc ();
+          //    sleep_ms (1);
           continue;
         }
-
-      gpu_proc ();
     }
 
   gpu_release ();

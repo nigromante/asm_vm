@@ -12,13 +12,13 @@ run_pause_getchar ()
 void
 run_pause_sleep ()
 {
-  sleep_ms (100);
+  sleep_ms (10);
 }
 
 void
 trace_callback_full ()
 {
-  code->dump ();
+  code->dump (IP_Get ());
   regs_dump ();
   ram->dump ();
   //  mem_dump ();
@@ -28,8 +28,14 @@ trace_callback_full ()
 void
 trace_callback_simple ()
 {
-  code->dump ();
+  code->dump (IP_Get ());
   pausa ();
+}
+
+void
+eval_define_fn (char *line, void *handler)
+{
+  callDefine (line);
 }
 
 // ------------------------------------------------------------------ Executes
@@ -68,6 +74,7 @@ execute (char *filename, int mode, int dump_level)
   code->load ();
 
   cursor_hide ();
+  preproc->eval_defines (eval_define_fn, NULL);
   cpu->set_start ();
   int ret = cpu->run ();
   cursor_show ();

@@ -35,11 +35,11 @@ typedef struct
 
   // -------------- public methods
   void (*load) ();
-  void (*dump) ();
 
   char *(*global_get) ();
   void (*global_set) (char *label);
 
+  void (*dump) (int current_line);
   void (*dump_type) (int tipo);
 
   _CODE_LINE_ *(*get_line) (int row_number);

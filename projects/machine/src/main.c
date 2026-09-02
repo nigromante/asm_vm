@@ -1,6 +1,7 @@
 #include <start.h>
 #include <unistd.h>
 
+#include <GL/glut.h>
 int thread_ini (char *filename, int mode, int dump_level);
 
 // -------------------------------------------------------- Usage Instructions
@@ -18,6 +19,8 @@ main (int argc, char **argv)
   int R_flag = 0, D_flag = 0, V_flag = 0, mode = 1;
   int b_flag = 0, a_flag = 0, dump_level = 1;
   int opt;
+
+  glutInit (&argc, argv);
 
   clrscr ();
 

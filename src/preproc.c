@@ -45,12 +45,12 @@ preproc_load ()
               strcpy (preproc->global_label, p);
               trim (preproc->global_label);
             }
-
-          if (isDefine (line))
-            {
-              callDefine (line);
-            }
-
+          /*
+                    if (isDefine (line))
+                      {
+                        callDefine (line);
+                      }
+          */
           // Labels count
           if (*(line + strlen (line) - 1) == ':')
             {
@@ -63,11 +63,23 @@ preproc_load ()
 void
 preproc_dump ()
 {
-
   for (int row = 1; row <= preproc->lines_cnt; row++)
     {
       char *line = (char *)&(preproc->lines[row - 1]);
       printf (":: [%s]\n", line);
+    }
+}
+
+void
+preproc_eval_defines (void (*callback) (char *line, void *), void *handler)
+{
+  for (int row = 1; row <= preproc->lines_cnt; row++)
+    {
+      char *line = (char *)&(preproc->lines[row - 1]);
+      if (isDefine (line))
+        {
+          callback (line, handler);
+        }
     }
 }
 
@@ -109,6 +121,7 @@ preproc_init ()
 
   preproc->global = preproc_global;
   preproc->set_global = preproc_set_global;
+  preproc->eval_defines = preproc_eval_defines;
 }
 
 void

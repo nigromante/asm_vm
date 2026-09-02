@@ -34,6 +34,7 @@ syscall_consume (int *n, _REG_ *_reg)
 void
 syscall_produce (int n, _REG_ *_reg)
 {
+  printf (" %d %d \n ", n, _reg->CX);
   _SCALL_BFFR_ *p = (sc_bffr + sc_bffr_end);
   p->n = n;
   memcpy (&(p->reg), _reg, sizeof (_REG_));

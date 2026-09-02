@@ -192,19 +192,18 @@ code_load ()
 
 // --------------------------------------------------------------------- Dumps
 void
-code_dump_source ()
+code_dump_source (int current_line)
 {
   _CODE_LINE_ *line
       = (_CODE_LINE_ *)((char *)code->lines
-                        + (IP_Get () - 1) * sizeof (_CODE_LINE_));
+                        + (current_line - 1) * sizeof (_CODE_LINE_));
   gotoxy (3, 40);
   source->dump (line->reference);
 }
 
 void
-code_dump_full ()
+code_dump_full (int current_line)
 {
-  int current_line = IP_Get ();
   int src_current_line = 0;
   int _alto = 50, _start = 1, _end = code->lines_cnt;
   int _medio = _alto / 2;
@@ -263,12 +262,12 @@ code_dump_full ()
   source->dump (src_current_line);
 }
 
-void (*code_dump_fn) ();
+void (*code_dump_fn) (int);
 
 void
-code_dump ()
+code_dump (int current_line)
 {
-  code_dump_fn ();
+  code_dump_fn (current_line);
 }
 
 void

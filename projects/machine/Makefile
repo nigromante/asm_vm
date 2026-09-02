@@ -59,8 +59,7 @@ DEPFLAGS = -MMD -MP -MF $(DEPDIR)/$*.d
 # Linker Flags ----------------------------------------------------------------
 LD:=gcc
 LDFLAGS:=-L $(LIBDIR)
-LDLIBS:=-lvulkan
-
+LDLIBS:=-lglut -lGLU -lGL -lm 
 
 
 # ---------------------------------------------------------------------- Helps
